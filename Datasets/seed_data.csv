@@ -1,0 +1,624 @@
+Week;Stand;Camera;Treatment;Depression_number;Seed_sp;Seeds Remaining;Notes
+First;TO04;1;All;1;ABLA;17;Rodent feces in all the tray
+First;TO04;1;All;2;ABAM;5;
+First;TO04;1;All;3;CANO;0;
+First;TO04;1;All;5;PSME;5;
+First;TO04;1;All;6;TSHE;15;
+First;TO04;1;All;7;THPL;33;
+First;TO04;2;High;5;CANO;1;
+First;TO04;2;High;6;ABAM;1;ABAM seed went into ABLA depression, does this avoid predation?
+First;TO04;2;High;7;ABLA;17;
+First;TO04;3;Low;5;PSME;17;High amount of PSME traces/Some TSHE seed in this depression
+First;TO04;3;Low;6;TSHE;to count;Some THPL seeds in this depression
+First;TO04;3;Low;7;THPL;to count;Some TSHE seeds in this depression
+First;TO04;4;High;5;ABLA;16;19 ABLA seeds originally
+First;TO04;4;High;6;ABAM;5;
+First;TO04;4;High;7;CANO;18;
+First;TO04;5;Low;5;TSHE;23;Rodent feces in all the tray
+First;TO04;5;Low;6;PSME;15;Very light PSME traces present
+First;TO04;5;Low;7;THPL;52;
+First;TO04;6;All;1;ABAM;0;Rodent feces in all the tray
+First;TO04;6;All;2;ABLA;16;
+First;TO04;6;All;3;CANO;9;Most of the CANO seeds unfill
+First;TO04;6;All;5;PSME;3;Low quality PSME seeds, open but not eaten
+First;TO04;6;All;6;THPL;23;
+First;TO04;6;All;7;TSHE;15;
+First;TO04;7;All;1;CANO;19;Rodent feces in all the tray
+First;TO04;7;All;2;ABLA;20;
+First;TO04;7;All;3;ABAM;4;
+First;TO04;7;All;5;THPL;53;
+First;TO04;7;All;6;PSME;15;
+First;TO04;7;All;7;TSHE;43;
+First;TO04;8;Low;1;PSME;17;
+First;TO04;8;Low;2;THPL;67;
+First;TO04;8;Low;3;TSHE;59;
+First;TO04;9;High;5;ABLA;20;
+First;TO04;9;High;6;CANO;25;
+First;TO04;9;High;7;ABAM;5;
+First;AV06;10;High;1;CANO;0;Rodent feces in all the tray
+First;AV06;10;High;2;ABAM;0;
+First;AV06;10;High;3;ABLA;18;
+First;AV06;11;Low;5;PSME;7;Rodent feces in all the tray/PSME traces present
+First;AV06;11;Low;6;TSHE;24;
+First;AV06;11;Low;7;THPL;80;
+First;AV06;12;All;1;ABLA;19;Rodent feces in all the tray
+First;AV06;12;All;2;ABAM;3;
+First;AV06;12;All;3;CANO;0;
+First;AV06;12;All;5;PSME;3;
+First;AV06;12;All;6;TSHE;7;
+First;AV06;12;All;7;THPL;1;
+First;AV06;13;High;5;ABAM;5;Rodent feces in all the tray
+First;AV06;13;High;6;CANO;0;Very light traces of CANO
+First;AV06;13;High;7;ABLA;20;
+First;AV06;14;All;1;THPL;4;Rodent feces in all the tray
+First;AV06;14;All;2;TSHE;14;
+First;AV06;14;All;3;PSME;0;
+First;AV06;14;All;5;CANO;0;
+First;AV06;14;All;6;ABAM;4;
+First;AV06;14;All;7;ABLA;19;
+First;AV06;15;Low;1;THPL;1;Rodent feces in all the tray
+First;AV06;15;Low;2;PSME;4;
+First;AV06;15;Low;3;TSHE;9;Bug eating a TSHE seed
+First;AV06;16;Low;1;TSHE;0;Rodent feces in all the tray
+First;AV06;16;Low;2;PSME;3;
+First;AV06;16;Low;3;THPL;42;
+First;AV06;17;All;1;TSHE;0;Very light traces of TSHE
+First;AV06;17;All;2;THPL;6;Rodent feces in all the tray
+First;AV06;17;All;3;PSME;0;
+First;AV06;17;All;5;ABAM;1;
+First;AV06;17;All;6;ABLA;20;Rodent feces in all the tray
+First;AV06;17;All;7;CANO;1;
+First;AV06;18;High;1;ABLA;20;
+First;AV06;18;High;2;ABAM;0;
+First;AV06;18;High;3;CANO;1;
+First;AE10;19;All;1;CANO;0;Rodent feces in all the tray
+First;AE10;19;All;2;ABLA;18;
+First;AE10;19;All;3;ABAM;0;
+First;AE10;19;All;5;PSME;0;
+First;AE10;19;All;6;THPL;16;
+First;AE10;19;All;7;TSHE;0;Filter out of the depression
+First;AE10;20;Low;1;PSME;0;
+First;AE10;20;Low;2;THPL;7;Rodent feces in all the tray
+First;AE10;20;Low;3;TSHE;18;
+First;AE10;21;High;5;ABLA;19;
+First;AE10;21;High;6;ABAM;0;
+First;AE10;21;High;7;CANO;0;
+First;AE10;22;Low;1;PSME;0;Rodent feces in all the tray/A lot of traces of PSME seeds and a lot  of testing bites
+First;AE10;22;Low;2;TSHE;2;A lot of traces of TSHE/Surgical work (invertebrate?)
+First;AE10;22;Low;3;THPL;3;A lot of traces of THPL
+First;AE10;23;High;1;ABAM;0;Rodent feces in all the tray
+First;AE10;23;High;2;CANO;0;CANO traces present
+First;AE10;23;High;3;ABLA;18;
+First;AE10;24;All;1;THPL;83;Rodent feces in all the tray
+First;AE10;24;All;2;TSHE;39;
+First;AE10;24;All;3;PSME;0;
+First;AE10;24;All;5;ABLA;15;
+First;AE10;24;All;6;ABAM;0;
+First;AE10;24;All;7;CANO;0;
+First;AE10;25;Low;1;TSHE;0;Very light traces of TSHE
+First;AE10;25;Low;2;THPL;1;Very light traces of THPL
+First;AE10;25;Low;3;PSME;0;Very light traces of PSME
+First;AE10;26;All;1;ABLA;20;Rodent feces in all the tray
+First;AE10;26;All;2;CANO;0;
+First;AE10;26;All;3;ABAM;1;
+First;AE10;26;All;5;THPL;5;THPL traces present/Small amount of filled seeds
+First;AE10;26;All;6;TSHE;0;TSHE traces present
+First;AE10;26;All;7;PSME;0;Very light traces of PSME
+First;AE10;27;High;1;CANO;0;
+First;AE10;27;High;2;ABLA;19;
+First;AE10;27;High;3;ABAM;0;
+Second;TO04;1;Low;5;THPL;1;Rodent feces in all the tray
+Second;TO04;1;Low;6;TSHE;0;
+Second;TO04;1;Low;7;PSME;0;Partial seeds or Low quality PSME?
+Second;TO04;2;All;1;ABLA;0;Partial seeds or Low quality ABLA?
+Second;TO04;2;All;2;CANO;0;Rodent feces in all the tray
+Second;TO04;2;All;3;ABAM;3;
+Second;TO04;2;All;5;THPL;2;
+Second;TO04;2;All;6;PSME;0;
+Second;TO04;2;All;7;TSHE;0;
+Second;TO04;3;High;1;ABAM;3;Rodent feces in all the tray
+Second;TO04;3;High;2;CANO;0;high amount of CANO traces 
+Second;TO04;3;High;3;ABLA;3;
+Second;TO04;4;Low;5;TSHE;1;Rodent feces in all the tray
+Second;TO04;4;Low;6;PSME;0;A lot of beattles in the tray
+Second;TO04;4;Low;7;THPL;3;Partial seeds or Low quality THPL?
+Second;TO04;5;High;5;ABLA;4;Rodent feces in all the tray/Partial seeds due to invertebrates?
+Second;TO04;5;High;6;CANO;1;High amount of traces (difficult to count)
+Second;TO04;5;High;7;ABAM;2;
+Second;TO04;6;All;1;CANO;3;High amount of CANO traces
+Second;TO04;6;All;2;ABLA;5;
+Second;TO04;6;All;3;ABAM;1;
+Second;TO04;6;All;5;THPL;6;Partial seeds or Low quality THPL?
+Second;TO04;6;All;6;TSHE;0;Partial seeds or Low quality TSHE?
+Second;TO04;6;All;7;PSME;0;Partial seeds or Low quality PSME?
+Second;TO04;7;All;1;TSHE;62;
+Second;TO04;7;All;2;PSME;21;
+Second;TO04;7;All;3;THPL;45;Partial seeds or Low quality THPL?
+Second;TO04;7;All;5;ABAM;3;
+Second;TO04;7;All;6;CANO;13;
+Second;TO04;7;All;7;ABLA;6;
+Second;TO04;8;Low;1;TSHE;71;
+Second;TO04;8;Low;2;THPL;77;Some low quality seeds remaining
+Second;TO04;8;Low;3;PSME;17;
+Second;TO04;9;High;5;ABAM;4;
+Second;TO04;9;High;6;CANO;15;
+Second;TO04;9;High;7;ABLA;7;
+Second;AV06;10;All;1;ABLA;5;Rodent feces in all the tray
+Second;AV06;10;All;2;CANO;0;
+Second;AV06;10;All;3;ABAM;3;
+Second;AV06;10;All;5;TSHE;5;
+Second;AV06;10;All;6;PSME;0;
+Second;AV06;10;All;7;THPL;4;
+Second;AV06;11;Low;1;TSHE;2;Rodent feces in all the tray
+Second;AV06;11;Low;2;THPL;23;Partial seeds or Low quality THPL?
+Second;AV06;11;Low;3;PSME;0;
+Second;AV06;12;High;5;ABAM;1;
+Second;AV06;12;High;6;CANO;0;
+Second;AV06;12;High;7;ABLA;6;
+Second;AV06;13;Low;1;PSME;1;Partial seeds or Low quality PSME?
+Second;AV06;13;Low;2;TSHE;14;Rodent feces in all the tray
+Second;AV06;13;Low;3;THPL;0;Partial seeds or Low quality THPL?
+Second;AV06;14;High;5;ABAM;2;Rodent feces in all the tray
+Second;AV06;14;High;6;CANO;0;
+Second;AV06;14;High;7;ABLA;8;
+Second;AV06;15;All;1;ABLA;6;Rodent feces in all the tray
+Second;AV06;15;All;2;ABAM;0;
+Second;AV06;15;All;3;CANO;0;
+Second;AV06;15;All;5;THPL;4;
+Second;AV06;15;All;6;PSME;1;
+Second;AV06;15;All;7;TSHE;12;
+Second;AV06;16;Low;5;TSHE;0;
+Second;AV06;16;Low;6;THPL;4;Low quality THPL?
+Second;AV06;16;Low;7;PSME;1;Low quality PSME?
+Second;AV06;17;High;5;ABAM;2;Low quality ABAM?
+Second;AV06;17;High;6;CANO;0;
+Second;AV06;17;High;7;ABLA;3;
+Second;AV06;18;All;1;THPL;3;Rodent feces in all the tray
+Second;AV06;18;All;2;TSHE;10;
+Second;AV06;18;All;3;PSME;1;
+Second;AV06;18;All;5;ABAM;1;
+Second;AV06;18;All;6;ABLA;7;
+Second;AV06;18;All;7;CANO;0;
+Second;AE10;19;Low;1;TSHE;0;Rodent feces in all the tray
+Second;AE10;19;Low;2;THPL;2;
+Second;AE10;19;Low;3;PSME;0;
+Second;AE10;20;All;1;ABAM;0;Rodent feces in all the tray
+Second;AE10;20;All;2;CANO;0;
+Second;AE10;20;All;3;ABLA;0;
+Second;AE10;20;All;5;PSME;0;
+Second;AE10;20;All;6;THPL;0;
+Second;AE10;20;All;7;TSHE;0;
+Second;AE10;21;High;5;ABAM;0;Rodent feces in all the tray
+Second;AE10;21;High;6;ABLA;6;
+Second;AE10;21;High;7;CANO;0;
+Second;AE10;22;All;7;THPL;4;Rodent feces in all the tray/Low quality THPL?
+Second;AE10;22;All;6;PSME;0;
+Second;AE10;22;All;5;TSHE;4;
+Second;AE10;22;All;3;ABLA;10;
+Second;AE10;22;All;2;ABAM;1;
+Second;AE10;22;All;1;CANO;0;
+Second;AE10;23;Low;1;TSHE;0;Rodent feces in all the tray
+Second;AE10;23;Low;2;THPL;25;THPL floating in water
+Second;AE10;23;Low;3;PSME;0;
+Second;AE10;24;High;1;ABAM;1;Rodent feces in all the tray
+Second;AE10;24;High;2;ABLA;6;
+Second;AE10;24;High;3;CANO;0;
+Second;AE10;25;Low;1;PSME;0;Rodent feces in all the tray
+Second;AE10;25;Low;2;THPL;42;Partial seeds or Low quality THPL?
+Second;AE10;25;Low;3;TSHE;10;
+Second;AE10;26;High;1;ABAM;1;Rodent feces in all the tray
+Second;AE10;26;High;2;CANO;0;
+Second;AE10;26;High;3;ABLA;10;
+Second;AE10;27;All;1;PSME;0;Rodent feces in all the tray
+Second;AE10;27;All;2;THPL;11;Partial seeds or Low quality THPL?
+Second;AE10;27;All;3;TSHE;1;
+Second;AE10;27;All;5;ABAM;0;
+Second;AE10;27;All;6;ABLA;7;
+Second;AE10;27;All;7;CANO;0;
+Third;TO04;1;High;5;ABAM;0;Rodent feces present in tray
+Third;TO04;1;High;6;ABLA;9;
+Third;TO04;1;High;7;CANO;0;
+Third;TO04;2;Low;5;PSME;0;
+Third;TO04;2;Low;6;TSHE;1;
+Third;TO04;2;Low;7;THPL;25;
+Third;TO04;3;All;1;THPL;8;
+Third;TO04;3;All;2;TSHE;4;
+Third;TO04;3;All;3;PSME;0;
+Third;TO04;3;All;5;CANO;0;
+Third;TO04;3;All;6;ABAM;0;
+Third;TO04;3;All;7;ABLA;8;
+Third;TO04;4;High;5;ABAM;0;
+Third;TO04;4;High;6;CANO;9;
+Third;TO04;4;High;7;ABLA;8;
+Third;TO04;5;All;1;PSME;0;Rodent feces present in tray
+Third;TO04;5;All;2;THPL;26;
+Third;TO04;5;All;3;TSHE;18;
+Third;TO04;5;All;5;ABAM;0;
+Third;TO04;5;All;6;CANO;2;
+Third;TO04;5;All;7;ABLA;10;
+Third;TO04;6;Low;5;PSME;0;Rodent feces present in tray
+Third;TO04;6;Low;6;THPL;2;
+Third;TO04;6;Low;7;TSHE;15;
+Third;TO04;7;High;1;ABAM;1;
+Third;TO04;7;High;2;ABLA;9;
+Third;TO04;7;High;3;CANO;0;
+Third;TO04;8;All;5;TSHE;42;
+Third;TO04;8;All;6;PSME;22;
+Third;TO04;8;All;7;THPL;80;
+Third;TO04;8;All;1;ABLA;9;
+Third;TO04;8;All;2;CANO;30;
+Third;TO04;8;All;3;ABAM;5;
+Third;TO04;9;Low;1;THPL;18;
+Third;TO04;9;Low;2;PSME;0;
+Third;TO04;9;Low;3;TSHE;1;
+Third;AV06;10;Low;5;PSME;0;
+Third;AV06;10;Low;6;TSHE;0;
+Third;AV06;10;Low;7;THPL;30;
+Third;AV06;11;High;1;CANO;30;
+Third;AV06;11;High;2;ABLA;10;
+Third;AV06;11;High;3;ABAM;5;
+Third;AV06;12;All;1;TSHE;90;
+Third;AV06;12;All;2;PSME;25;
+Third;AV06;12;All;3;THPL;88;
+Third;AV06;12;All;5;CANO;29;
+Third;AV06;12;All;6;ABAM;5;
+Third;AV06;12;All;7;ABLA;10;
+Third;AV06;13;High;5;CANO;30;
+Third;AV06;13;High;6;ABAM;5;
+Third;AV06;13;High;7;ABLA;10;
+Third;AV06;14;Low;5;THPL;59;Rodent feces present in tray
+Third;AV06;14;Low;6;PSME;0;
+Third;AV06;14;Low;7;TSHE;3;
+Third;AV06;15;All;1;TSHE;90;Rodent feces present in tray
+Third;AV06;15;All;2;THPL;89;
+Third;AV06;15;All;3;PSME;25;
+Third;AV06;15;All;5;CANO;30;
+Third;AV06;15;All;6;ABAM;5;
+Third;AV06;15;All;7;ABLA;9;
+Third;AV06;16;All;1;TSHE;0;Rodent feces present in tray
+Third;AV06;16;All;2;PSME;0;
+Third;AV06;16;All;3;THPL;86;
+Third;AV06;16;All;5;ABLA;10;
+Third;AV06;16;All;6;CANO;1;
+Third;AV06;16;All;7;ABAM;0;Many trace pieces (uncountable)
+Third;AV06;17;Low;5;TSHE;4;
+Third;AV06;17;Low;6;THPL;90;
+Third;AV06;17;Low;7;PSME;0;
+Third;AV06;18;High;5;CANO;2;Rodent feces present in tray
+Third;AV06;18;High;6;ABAM;1;
+Third;AV06;18;High;7;ABLA;10;
+Third;AE10;19;Low;1;TSHE;22;Seeds frozen together
+Third;AE10;19;Low;2;PSME;0;
+Third;AE10;19;Low;3;THPL;66;Seeds frozen together
+Third;AE10;20;High;5;ABAM;2;
+Third;AE10;20;High;6;CANO;2;
+Third;AE10;20;High;7;ABLA;5;
+Third;AE10;21;All;1;THPL;42;Seeds frozen together
+Third;AE10;21;All;2;PSME;0;
+Third;AE10;21;All;3;TSHE;21;
+Third;AE10;21;All;5;ABAM;1;
+Third;AE10;21;All;6;CANO;NA;
+Third;AE10;21;All;7;ABLA;2;
+Third;AE10;22;Low;5;TSHE;0;
+Third;AE10;22;Low;6;THPL;60;Seeds frozen together
+Third;AE10;22;Low;7;PSME;0;
+Third;AE10;23;High;1;ABLA;7;
+Third;AE10;23;High;2;ABAM;2;
+Third;AE10;23;High;3;CANO;0;
+Third;AE10;24;All;1;THPL;29;
+Third;AE10;24;All;2;TSHE;61;Seeds frozen together
+Third;AE10;24;All;3;PSME;0;
+Third;AE10;24;All;5;CANO;2;
+Third;AE10;24;All;6;ABLA;1;
+Third;AE10;24;All;7;ABAM;0;
+Third;AE10;25;Low;1;TSHE;24;Seeds frozen together
+Third;AE10;25;Low;2;PSME;0;
+Third;AE10;25;Low;3;THPL;81;Seeds frozen together
+Third;AE10;26;High;5;ABAM;2;Rodent feces present in tray
+Third;AE10;26;High;6;CANO;1;
+Third;AE10;26;High;7;ABLA;5;
+Third;AE10;27;All;1;TSHE;49;
+Third;AE10;27;All;2;THPL;69;
+Third;AE10;27;All;3;PSME;0;
+Third;AE10;27;All;5;ABAM;2;
+Third;AE10;27;All;6;CANO;0;
+Third;AE10;27;All;7;ABLA;9;
+Fourth;TO04;1;High;1;ABLA;5;Tray waterlogged, rodent feces present in tray
+Fourth;TO04;1;High;2;ABAM;0;
+Fourth;TO04;1;High;3;CANO;0;
+Fourth;TO04;2;All;1;ABLA;5;Tray waterlogged, rodent feces present in tray
+Fourth;TO04;2;All;2;ABAM;0;
+Fourth;TO04;2;All;3;CANO;2;
+Fourth;TO04;3;All;5;TSHE;4;
+Fourth;TO04;3;All;6;THPL;12;
+Fourth;TO04;3;All;7;PSME;4;
+Fourth;TO04;3;Low;5;TSHE;16;
+Fourth;TO04;3;Low;6;THPL;40;
+Fourth;TO04;3;Low;7;PSME;0;
+Fourth;TO04;4;All;1;THPLE;35;rodent feces present in tray
+Fourth;TO04;4;All;2;PSME;2;
+Fourth;TO04;4;All;3;TSHE;25;
+Fourth;TO04;4;All;5;ABAM;4;
+Fourth;TO04;4;All;6;CANO;0;
+Fourth;TO04;4;All;7;ABLA;9;
+Fourth;TO04;5;High;5;ABAM;2;rodent feces present in tray
+Fourth;TO04;5;High;6;ABLA;7;
+Fourth;TO04;5;High;7;CANO;3;
+Fourth;TO04;6;Low;5;THPL;38;Tray waterlogged
+Fourth;TO04;6;Low;6;TSHE;9;
+Fourth;TO04;6;Low;7;PSME;1;
+Fourth;TO04;7;Low;5;THPL;37;Likely moved by water
+Fourth;TO04;7;Low;6;PSME;5;
+Fourth;TO04;7;Low;7;TSHE;41;
+Fourth;TO04;8;All;1;PSME;0;Tray waterlogged
+Fourth;TO04;8;All;2;THPL;79;
+Fourth;TO04;8;All;3;TSHE;50;
+Fourth;TO04;8;All;5;ABLA;7;
+Fourth;TO04;8;All;6;CANO;19;
+Fourth;TO04;8;All;7;ABAM;5;
+Fourth;TO04;9;High;1;CANO;3;
+Fourth;TO04;9;High;2;ABLA;3;
+Fourth;TO04;9;High;3;ABAM;4;
+Fourth;AV06;10;High;5;ABAM;2;
+Fourth;AV06;10;High;6;CANO;0;
+Fourth;AV06;10;High;7;ABLA;6;
+Fourth;AV06;11;All;1;ABLA;10;No predation in tray despite seed counts (rain)
+Fourth;AV06;11;All;2;ABAM;5;
+Fourth;AV06;11;All;3;CANO;30;
+Fourth;AV06;11;All;5;PSME;25;
+Fourth;AV06;11;All;6;TSHE;54;
+Fourth;AV06;11;All;7;THPL;84;
+Fourth;AV06;12;Low;1;TSHE;1;
+Fourth;AV06;12;Low;2;THPL;41;
+Fourth;AV06;12;Low;3;PSME;0;
+Fourth;AV06;13;All;1;THPL;65;
+Fourth;AV06;13;All;2;TSHE;14;
+Fourth;AV06;13;All;3;PSME;1;
+Fourth;AV06;13;All;5;CANO;0;
+Fourth;AV06;13;All;6;ABLA;5;
+Fourth;AV06;13;All;7;ABAM;1;
+Fourth;AV06;14;High;5;ABLA;3;Tray waterlogged, bigger holes should be drilled (if no canopy for tray)
+Fourth;AV06;14;High;6;ABAM;1;
+Fourth;AV06;14;High;7;CANO;1;
+Fourth;AV06;15;Low;1;THPL;72;
+Fourth;AV06;15;Low;2;PSME;22;
+Fourth;AV06;15;Low;3;TSHE;46;
+Fourth;AV06;16;High;5;CANO;0;
+Fourth;AV06;16;High;6;ABAM;1;
+Fourth;AV06;16;High;7;ABLA;1;
+Fourth;AV06;17;Low;5;THPL;27;
+Fourth;AV06;17;Low;6;TSHE;1;
+Fourth;AV06;17;Low;7;PSME;1;
+Fourth;AV06;18;All;1;ABAM;0;rodent feces present in tray, tray waterlogged, predation + rain
+Fourth;AV06;18;All;2;CANO;0;
+Fourth;AV06;18;All;3;ABLA;2;
+Fourth;AV06;18;All;5;THPL;13;
+Fourth;AV06;18;All;6;TSHE;0;
+Fourth;AV06;18;All;7;PSME;0;
+Fourth;AE10;19;NA;NA;NA;NA;
+Fourth;AE10;20;NA;NA;NA;NA;
+Fourth;AE10;21;NA;NA;NA;NA;
+Fourth;AE10;21;NA;NA;NA;NA;
+Fourth;AE10;22;NA;NA;NA;NA;
+Fourth;AE10;23;NA;NA;NA;NA;
+Fourth;AE10;24;NA;NA;NA;NA;
+Fourth;AE10;25;NA;NA;NA;NA;
+Fourth;AE10;26;NA;NA;NA;NA;
+Fourth;AE10;27;NA;NA;NA;NA;
+Fourth;AE10;27;NA;NA;NA;NA;
+First;TO04;1;NA;NA;NA;NA;
+Second;TO04;1;NA;NA;NA;NA;
+Third;TO04;1;NA;NA;NA;NA;
+Fourth;TO04;1;NA;NA;NA;NA;
+First;TO04;2;NA;NA;NA;NA;
+Second;TO04;2;NA;NA;NA;NA;
+Third;TO04;2;NA;NA;NA;NA;
+Fourth;TO04;2;NA;NA;NA;NA;
+First;TO04;3;NA;NA;NA;NA;
+Second;TO04;3;NA;NA;NA;NA;
+Third;TO04;3;NA;NA;NA;NA;
+Fourth;TO04;3;NA;NA;NA;NA;
+First;TO04;4;NA;NA;NA;NA;
+Second;TO04;4;NA;NA;NA;NA;
+Third;TO04;4;NA;NA;NA;NA;
+Fourth;TO04;4;NA;NA;NA;NA;
+First;TO04;5;NA;NA;NA;NA;
+Second;TO04;5;NA;NA;NA;NA;
+Third;TO04;5;NA;NA;NA;NA;
+Fourth;TO04;5;NA;NA;NA;NA;
+First;TO04;6;NA;NA;NA;NA;
+Second;TO04;6;NA;NA;NA;NA;
+Third;TO04;6;NA;NA;NA;NA;
+Fourth;TO04;6;NA;NA;NA;NA;
+First;TO04;7;NA;NA;NA;NA;
+Second;TO04;7;NA;NA;NA;NA;
+Third;TO04;7;NA;NA;NA;NA;
+Fourth;TO04;7;NA;NA;NA;NA;
+First;TO04;8;NA;NA;NA;NA;
+Second;TO04;8;NA;NA;NA;NA;
+Third;TO04;8;NA;NA;NA;NA;
+Fourth;TO04;8;NA;NA;NA;NA;
+First;TO04;9;NA;NA;NA;NA;
+Second;TO04;9;NA;NA;NA;NA;
+Third;TO04;9;NA;NA;NA;NA;
+Fourth;TO04;9;NA;NA;NA;NA;
+First;AV06;10;NA;NA;NA;NA;
+Second;AV06;10;NA;NA;NA;NA;
+Third;AV06;10;NA;NA;NA;NA;
+Fourth;AV06;10;NA;NA;NA;NA;
+First;AV06;11;NA;NA;NA;NA;
+Second;AV06;11;NA;NA;NA;NA;
+Third;AV06;11;NA;NA;NA;NA;
+Fourth;AV06;11;NA;NA;NA;NA;
+First;AV06;12;NA;NA;NA;NA;
+Second;AV06;12;NA;NA;NA;NA;
+Third;AV06;12;NA;NA;NA;NA;
+Fourth;AV06;12;NA;NA;NA;NA;
+First;AV06;13;NA;NA;NA;NA;
+Second;AV06;13;NA;NA;NA;NA;
+Third;AV06;13;NA;NA;NA;NA;
+Fourth;AV06;13;NA;NA;NA;NA;
+First;AV06;14;NA;NA;NA;NA;
+Second;AV06;14;NA;NA;NA;NA;
+Third;AV06;14;NA;NA;NA;NA;
+Fourth;AV06;14;NA;NA;NA;NA;
+First;AV06;15;NA;NA;NA;NA;
+Second;AV06;15;NA;NA;NA;NA;
+Third;AV06;15;NA;NA;NA;NA;
+Fourth;AV06;15;NA;NA;NA;NA;
+First;AV06;16;NA;NA;NA;NA;
+Second;AV06;16;NA;NA;NA;NA;
+Third;AV06;16;NA;NA;NA;NA;
+Fourth;AV06;16;NA;NA;NA;NA;
+First;AV06;17;NA;NA;NA;NA;
+Second;AV06;17;NA;NA;NA;NA;
+Third;AV06;17;NA;NA;NA;NA;
+Fourth;AV06;17;NA;NA;NA;NA;
+First;AV06;18;NA;NA;NA;NA;
+Second;AV06;18;NA;NA;NA;NA;
+Third;AV06;18;NA;NA;NA;NA;
+Fourth;AV06;18;NA;NA;NA;NA;
+First;AE10;19;NA;NA;NA;NA;
+Second;AE10;19;NA;NA;NA;NA;
+Third;AE10;19;NA;NA;NA;NA;
+Fourth;AE10;19;NA;NA;NA;NA;
+First;AE10;20;NA;NA;NA;NA;
+Second;AE10;20;NA;NA;NA;NA;
+Third;AE10;20;NA;NA;NA;NA;
+Fourth;AE10;20;NA;NA;NA;NA;
+First;AE10;21;NA;NA;NA;NA;
+Second;AE10;21;NA;NA;NA;NA;
+Third;AE10;21;NA;NA;NA;NA;
+Fourth;AE10;21;NA;NA;NA;NA;
+First;AE10;22;NA;NA;NA;NA;
+Second;AE10;22;NA;NA;NA;NA;
+Third;AE10;22;NA;NA;NA;NA;
+Fourth;AE10;22;NA;NA;NA;NA;
+First;AE10;23;NA;NA;NA;NA;
+Second;AE10;23;NA;NA;NA;NA;
+Third;AE10;23;NA;NA;NA;NA;
+Fourth;AE10;23;NA;NA;NA;NA;
+First;AE10;24;NA;NA;NA;NA;
+Second;AE10;24;NA;NA;NA;NA;
+Third;AE10;24;NA;NA;NA;NA;
+Fourth;AE10;24;NA;NA;NA;NA;
+First;AE10;25;NA;NA;NA;NA;
+Second;AE10;25;NA;NA;NA;NA;
+Third;AE10;25;NA;NA;NA;NA;
+Fourth;AE10;25;NA;NA;NA;NA;
+First;AE10;26;NA;NA;NA;NA;
+Second;AE10;26;NA;NA;NA;NA;
+Third;AE10;26;NA;NA;NA;NA;
+Fourth;AE10;26;NA;NA;NA;NA;
+First;AE10;27;NA;NA;NA;NA;
+Second;AE10;27;NA;NA;NA;NA;
+Third;AE10;27;NA;NA;NA;NA;
+Fourth;AE10;27;NA;NA;NA;NA;
+First;TO04;1;NA;4;NA;NA;
+Second;TO04;1;NA;4;NA;NA;
+Third;TO04;1;NA;4;NA;NA;
+Fourth;TO04;1;NA;4;NA;NA;
+First;TO04;2;NA;4;NA;NA;
+Second;TO04;2;NA;4;NA;NA;
+Third;TO04;2;NA;4;NA;NA;
+Fourth;TO04;2;NA;4;NA;NA;
+First;TO04;3;NA;4;NA;NA;
+Second;TO04;3;NA;4;NA;NA;
+Third;TO04;3;NA;4;NA;NA;
+Fourth;TO04;3;NA;4;NA;NA;
+First;TO04;4;NA;4;NA;NA;
+Second;TO04;4;NA;4;NA;NA;
+Third;TO04;4;NA;4;NA;NA;
+Fourth;TO04;4;NA;4;NA;NA;
+First;TO04;5;NA;4;NA;NA;
+Second;TO04;5;NA;4;NA;NA;
+Third;TO04;5;NA;4;NA;NA;
+Fourth;TO04;5;NA;4;NA;NA;
+First;TO04;6;NA;4;NA;NA;
+Second;TO04;6;NA;4;NA;NA;
+Third;TO04;6;NA;4;NA;NA;
+Fourth;TO04;6;NA;4;NA;NA;
+First;TO04;7;NA;4;NA;NA;
+Second;TO04;7;NA;4;NA;NA;
+Third;TO04;7;NA;4;NA;NA;
+Fourth;TO04;7;NA;4;NA;NA;
+First;TO04;8;NA;4;NA;NA;
+Second;TO04;8;NA;4;NA;NA;
+Third;TO04;8;NA;4;NA;NA;
+Fourth;TO04;8;NA;4;NA;NA;
+First;TO04;9;NA;4;NA;NA;
+Second;TO04;9;NA;4;NA;NA;
+Third;TO04;9;NA;4;NA;NA;
+Fourth;TO04;9;NA;4;NA;NA;
+First;AV06;10;NA;4;NA;NA;
+Second;AV06;10;NA;4;NA;NA;
+Third;AV06;10;NA;4;NA;NA;
+Fourth;AV06;10;NA;4;NA;NA;
+First;AV06;11;NA;4;NA;NA;
+Second;AV06;11;NA;4;NA;NA;
+Third;AV06;11;NA;4;NA;NA;
+Fourth;AV06;11;NA;4;NA;NA;
+First;AV06;12;NA;4;NA;NA;
+Second;AV06;12;NA;4;NA;NA;
+Third;AV06;12;NA;4;NA;NA;
+Fourth;AV06;12;NA;4;NA;NA;
+First;AV06;13;NA;4;NA;NA;
+Second;AV06;13;NA;4;NA;NA;
+Third;AV06;13;NA;4;NA;NA;
+Fourth;AV06;13;NA;4;NA;NA;
+First;AV06;14;NA;4;NA;NA;
+Second;AV06;14;NA;4;NA;NA;
+Third;AV06;14;NA;4;NA;NA;
+Fourth;AV06;14;NA;4;NA;NA;
+First;AV06;15;NA;4;NA;NA;
+Second;AV06;15;NA;4;NA;NA;
+Third;AV06;15;NA;4;NA;NA;
+Fourth;AV06;15;NA;4;NA;NA;
+First;AV06;16;NA;4;NA;NA;
+Second;AV06;16;NA;4;NA;NA;
+Third;AV06;16;NA;4;NA;NA;
+Fourth;AV06;16;NA;4;NA;NA;
+First;AV06;17;NA;4;NA;NA;
+Second;AV06;17;NA;4;NA;NA;
+Third;AV06;17;NA;4;NA;NA;
+Fourth;AV06;17;NA;4;NA;NA;
+First;AV06;18;NA;4;NA;NA;
+Second;AV06;18;NA;4;NA;NA;
+Third;AV06;18;NA;4;NA;NA;
+Fourth;AV06;18;NA;4;NA;NA;
+First;AE10;19;NA;4;NA;NA;
+Second;AE10;19;NA;4;NA;NA;
+Third;AE10;19;NA;4;NA;NA;
+Fourth;AE10;19;NA;4;NA;NA;
+First;AE10;20;NA;4;NA;NA;
+Second;AE10;20;NA;4;NA;NA;
+Third;AE10;20;NA;4;NA;NA;
+Fourth;AE10;20;NA;4;NA;NA;
+First;AE10;21;NA;4;NA;NA;
+Second;AE10;21;NA;4;NA;NA;
+Third;AE10;21;NA;4;NA;NA;
+Fourth;AE10;21;NA;4;NA;NA;
+First;AE10;22;NA;4;NA;NA;
+Second;AE10;22;NA;4;NA;NA;
+Third;AE10;22;NA;4;NA;NA;
+Fourth;AE10;22;NA;4;NA;NA;
+First;AE10;23;NA;4;NA;NA;
+Second;AE10;23;NA;4;NA;NA;
+Third;AE10;23;NA;4;NA;NA;
+Fourth;AE10;23;NA;4;NA;NA;
+First;AE10;24;NA;4;NA;NA;
+Second;AE10;24;NA;4;NA;NA;
+Third;AE10;24;NA;4;NA;NA;
+Fourth;AE10;24;NA;4;NA;NA;
+First;AE10;25;NA;4;NA;NA;
+Second;AE10;25;NA;4;NA;NA;
+Third;AE10;25;NA;4;NA;NA;
+Fourth;AE10;25;NA;4;NA;NA;
+First;AE10;26;NA;4;NA;NA;
+Second;AE10;26;NA;4;NA;NA;
+Third;AE10;26;NA;4;NA;NA;
+Fourth;AE10;26;NA;4;NA;NA;
+First;AE10;27;NA;4;NA;NA;
+Second;AE10;27;NA;4;NA;NA;
+Third;AE10;27;NA;4;NA;NA;
+Fourth;AE10;27;NA;4;NA;NA;
