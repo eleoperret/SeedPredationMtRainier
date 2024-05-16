@@ -66,3 +66,6 @@ plot(TO04_site$species_diversity_camera,TO04_site$removal_per_all)
 
 plot(Treatment_all$Seed_sp,Treatment_all$removal_per_all)
 
+
+
+
