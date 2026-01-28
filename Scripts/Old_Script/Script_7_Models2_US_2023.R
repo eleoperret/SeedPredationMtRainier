@@ -30,48 +30,52 @@ library(lme4)
 #For THPL:Species_diversity*treatment
 #For TSHE:site* treatment
 
+
 # Loading the data --------------------------------------------------------
-load("C:/Users/eleop/polybox/phD/PhD/R/Seed_predation/Seed_predation_US_Github/Seed_predation_US_Github2/Datasets/data_merged_6.RData")
-head(data_merged_6)
+setwd("C:/Users/eperret/polybox - Eleonore Perret (eleonore.perret@usys.ethz.ch)@polybox.ethz.ch/phD/PhD/R/Seed_predation/Seed_predation_US_Github/Seed_predation_US_Github2/Datasets")
+load ("conspecific_with_dbh.RData")
 # Data formatting ---------------------------------------------------------
 #Changing the variables into characters (is that ok? That is what Ruben recommanded me)
-as.numeric(data_merged_6$number_of_trees)
-as.numeric(data_merged_6$species_diversity_camera)
+# as.numeric(data_merged_6$number_of_trees)
+# as.numeric(data_merged_6$species_diversity_camera)
+
+#Changing the name of the dataset for simplicity. 
+data<-conspecific_with_dbh
 
 #Making the dbh mean normal (same here? Ruben and Billur told me I should normalize this)
-ggplot(data_merged_6, aes(x=log(mean_dbh_y))) +
+ggplot(data, aes(x=log(mean_dbh_y))) +
   geom_density(fill="blue", alpha=0.5) +
   labs(title="Density Plot of Week Variable", x="Number_of_trees")
-log_dbh<-log(data_merged_6$mean_dbh_y)
-residuals_test <- residuals(data_merged_6$log_dbh)
+log_dbh<-log(data$mean_dbh_y)
+residuals_test <- residuals(data$log_dbh)
 shapiro.test(log_dbh)
 hist(log_dbh)
 qqnorm(log_dbh)
 qqline(log_dbh, col = 2)
 
 # Convert the factor to integers
-data_merged_6$Week[data_merged_6$Week == "First"] <- "1"
-data_merged_6$Week[data_merged_6$Week == "Second"] <- "2"
-data_merged_6$Week[data_merged_6$Week == "Third"] <- "3"
-data_merged_6$Week[data_merged_6$Week == "Fourth"] <- "4"
+data$Week[data$Week == "First"] <- "1"
+data$Week[data$Week == "Second"] <- "2"
+data$Week[data$Week == "Third"] <- "3"
+data$Week[data$Week == "Fourth"] <- "4"
 
 #I also changed this so I have successes and failures for the binomial analysis
 # Create a new variable 'successes' as the seeds_eaten column
-data_merged_6$successes <- data_merged_6$seeds_eaten
+data$successes <- data$seeds_eaten
 # Create a new variable 'trials' as the seeds_disposed column
-data_merged_6$trials <- data_merged_6$seeds_disposed
+data$trials <- data$seeds_disposed
 
 # Linear model: doesn't work (not normal data) ------------------------------------------------------------
 
 # First linear models
-testlm_null <- lm(removal_per_all ~ 1, data = data_merged_6)
-testlm_all<-lm(removal_per_all~Stand + Seed_sp+ Treatment+ log_dbh+ species_diversity_camera + number_of_trees, data= data_merged_6)
+testlm_null <- lm(removal_per_all ~ 1, data = data)
+testlm_all<-lm(removal_per_all~Stand + Seed_sp+ Treatment+ SI + Nb_trees + Matches_Species, data= data)
 summary (testlm_null)
 summary(testlm_all)
 
 #It seems that the seed_sp, the stand and the specie diversity have a significant impact
 
-testlm_sp_st_sd<-lm(removal_per_all~Stand + Seed_sp+  species_diversity_camera , data= data_merged_6)
+testlm_sp_st_sd<-lm(removal_per_all~Stand + Seed_sp+  species_diversity_camera , data= data)
 summary (testlm_sp_st_sd)
 
 plot(testlm_sp_st_sd)
@@ -87,19 +91,19 @@ qqline(residuals_test, col = 2)
 ##Try a beta regression
 # Issue - cannot handle values that are exactly 0 and exactly 1
 # replace them with 0.005, 0.995
-removal_per_all_2 <- data_merged_6$seeds
+removal_per_all_2 <- data$seeds
 removal_per_all_2[removal_per_all_2[]==0] <- 0.005
 removal_per_all_2[removal_per_all_2[]==1] <- 0.995
-data_merged_6$removal_per_all_2 <- removal_per_all_2
+data$removal_per_all_2 <- removal_per_all_2
 
-testbeta_null <- betareg(removal_per_all_2 ~ 1, data = data_merged_6)
-testbeta_null_all<- betareg(removal_per_all_2 ~ Stand + Seed_sp+ Treatment+ log_dbh+ species_diversity_camera + number_of_trees, data = data_merged_6)
+testbeta_null <- betareg(removal_per_all_2 ~ 1, data = data)
+testbeta_null_all<- betareg(removal_per_all_2 ~ Stand + Seed_sp+ Treatment+ log_dbh+ species_diversity_camera + number_of_trees, data = data)
 summary(testbeta_null)
 summary(testbeta_null_all)
 
 #It seems that the seed_sp, the stand and the specie diversity have a significant impact
 
-testbeta_sp_st_sd<-betareg(removal_per_all_2~Stand + Seed_sp+  species_diversity_camera , data= data_merged_6)
+testbeta_sp_st_sd<-betareg(removal_per_all_2~Stand + Seed_sp+  species_diversity_camera , data= data)
 summary (testbeta_sp_st_sd)
 
 plot(testbeta_sp_st_sd)
@@ -116,9 +120,9 @@ qqline(residuals_test, col = 2)
 
 # Lets try a glm
 testglm_null <- glm(removal_per_all_2 ~ 1, family="binomial", 
-                    weights = seeds_disposed, data=data_merged_6)
+                    weights = seeds_disposed, data=data)
 testglm_all <- glm(removal_per_all_2 ~Stand + Seed_sp+ Treatment+ log_dbh+ species_diversity_camera + number_of_trees, family="binomial", 
-                    weights = seeds_disposed, data=data_merged_6)
+                    weights = seeds_disposed, data=data)
 summary (testglm_null)
 summary(testglm_all)
 
@@ -126,7 +130,7 @@ summary(testglm_all)
 #lets test
 
 testglm_all_2 <- glm(removal_per_all_2 ~Stand + Seed_sp+ Treatment+ species_diversity_camera + number_of_trees, family="binomial", 
-                   weights = seeds_disposed, data=data_merged_6)
+                   weights = seeds_disposed, data=data)
 summary(testglm_all_2)
 
 #Seems better.
@@ -146,10 +150,10 @@ qqline(residuals_test, col = 2)
 
 testglmer_null <- glmer(cbind(successes, trials - successes) ~ 
                           1+ (1 | Camera.number) +(1|Week), 
-                        family = binomial, data =data_merged_6 )
+                        family = binomial, data =data )
 testglmer_all <- glmer(cbind(successes, trials - successes) ~ 
                           Seed_sp + log_dbh + Stand + Treatment + species_diversity_camera+ number_of_trees + (1 | Camera.number) +(1|Week), 
-                        family = binomial, data =data_merged_6 )
+                        family = binomial, data =data )
 summary (testglmer_null)
 summary(testglmer_all)
 
@@ -157,13 +161,13 @@ summary(testglmer_all)
 
 testglmer_all_2 <- glmer(cbind(successes, trials - successes) ~ 
                                 Seed_sp + Treatment + species_diversity_camera+  (1 | Camera.number), 
-                              family = binomial, data =data_merged_6 )
+                              family = binomial, data =data )
 summary(testglmer_all_2)
 #Doesn't perform better and model doesn't work
 
 testglmer_all_3 <- glmer(cbind(successes, trials - successes) ~ 
                            Seed_sp + Treatment +  (1 | Camera.number), 
-                         family = binomial, data =data_merged_6 )
+                         family = binomial, data =data )
 summary(testglmer_all_3)
 #Neither
 
@@ -177,19 +181,19 @@ print(AIC(testglmer_all_3))
 #let's check for interactions: 
 testglmer_int1 <- glmer(cbind(successes, trials - successes) ~ 
                          Seed_sp * log_dbh * Stand * Treatment * species_diversity_camera* number_of_trees + (1 | Camera.number) +(1|Week), 
-                       family = binomial, data =data_merged_6 )
+                       family = binomial, data =data )
 testglmer_int2 <- glmer(cbind(successes, trials - successes) ~ 
                          Seed_sp  * Treatment * species_diversity_camera + (1 | Camera.number) +(1|Week), 
-                       family = binomial, data =data_merged_6 )
+                       family = binomial, data =data )
 testglmer_int3 <- glmer(cbind(successes, trials - successes) ~ 
                           Seed_sp  * Treatment + species_diversity_camera + (1 | Camera.number) +(1|Week), 
-                        family = binomial, data =data_merged_6 )
+                        family = binomial, data =data )
 testglmer_int4 <- glmer(cbind(successes, trials - successes) ~ 
                           Seed_sp  + Treatment * species_diversity_camera + (1 | Camera.number) +(1|Week), 
-                        family = binomial, data =data_merged_6 )
+                        family = binomial, data =data )
 testglmer_int5 <- glmer(cbind(successes, trials - successes) ~ 
                           Seed_sp  * Treatment  + (1 | Camera.number) +(1|Week), 
-                        family = binomial, data =data_merged_6 )
+                        family = binomial, data =data )
 print(AIC(testglmer_all,testglmer_all_2,testglmer_all_3,testglmer_int2,testglmer_int3,testglmer_int4,testglmer_int5))
 
 #int 1,2,3 not working
@@ -201,7 +205,7 @@ print(AIC(testglmer_all,testglmer_all_2,testglmer_all_3,testglmer_int2,testglmer
 
 # GLMER per species ABAM  --------------------------------------------------
 
-subset_data <- subset(data_merged_6, Seed_sp == "ABAM")
+subset_data <- subset(data, Seed_sp == "ABAM")
 
 binomial_model_abam_1 <- glmer(cbind(successes, trials - successes) ~ 
                           log_dbh + Stand + Treatment + species_diversity_camera+ number_of_trees + (1 | Camera.number) +( 1|Week), 
@@ -245,7 +249,7 @@ qqline(residuals_test, col = 2)
 
 # GLMER binomial species ABLA --------------------------------------------------
 
-subset_data <- subset(data_merged_6, Seed_sp == "ABLA")
+subset_data <- subset(data, Seed_sp == "ABLA")
 
 binomial_model_abla_1 <- glmer(cbind(successes, trials - successes) ~ 
                                  log_dbh+Stand + species_diversity_camera + Treatment + number_of_trees +(1 | Camera.number)+ (1|Week), 
@@ -298,7 +302,7 @@ qqline(residuals_test, col = 2)
 
 # GLMER binomial species CANO --------------------------------------------------
 
-subset_data <- subset(data_merged_6, Seed_sp == "CANO")
+subset_data <- subset(data, Seed_sp == "CANO")
 
 binomial_model_cano_1 <- glmer(cbind(successes, trials - successes) ~ 
                                  log_dbh + Stand + number_of_trees + species_diversity_camera + Treatment +(1 | Camera.number)+ (1|Week), 
@@ -361,7 +365,7 @@ qqline(residuals_test, col = 2)
 
 # GLMER binomial species PSME --------------------------------------------------
 
-subset_data <- subset(data_merged_6, Seed_sp == "PSME")
+subset_data <- subset(data, Seed_sp == "PSME")
 
 binomial_model_psme_1 <- glmer(cbind(successes, trials - successes) ~ 
                                  log_dbh + Stand + number_of_trees + species_diversity_camera + Treatment +(1 | Camera.number)+ (1|Week), 
@@ -451,7 +455,7 @@ qqline(residuals_test, col = 2)
 
 # GLMER binomial species THPL --------------------------------------------------
 
-subset_data <- subset(data_merged_6, Seed_sp == "THPL")
+subset_data <- subset(data, Seed_sp == "THPL")
 
 binomial_model_thpl_1 <- glmer(cbind(successes, trials - successes) ~ 
                                  log_dbh + Stand + number_of_trees + species_diversity_camera + Treatment +(1 | Camera.number)+ (1|Week), 
@@ -516,7 +520,7 @@ qqline(residuals_test, col = 2)
 
 # GLMER binomial species TSHE --------------------------------------------------
 
-subset_data <- subset(data_merged_6, Seed_sp == "TSHE")
+subset_data <- subset(data, Seed_sp == "TSHE")
 
 binomial_model_tshe_1 <- glmer(cbind(successes, trials - successes) ~ 
                                  log_dbh + Stand + number_of_trees + species_diversity_camera + Treatment +(1 | Camera.number)+ (1|Week), 

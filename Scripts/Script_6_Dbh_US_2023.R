@@ -9,15 +9,77 @@
 library(dplyr)
 library(ggplot2)
 
+setwd("C:/Users/eperret/polybox - Eleonore Perret (eleonore.perret@usys.ethz.ch)@polybox.ethz.ch/phD/PhD/R/Seed_predation/Seed_predation_US_Github/Seed_predation_US_Github2/Datasets")
 #Loading the data to be treated
-load("C:/Users/eleop/polybox/phD/PhD/R/Seed_predation/Seed_predation_US_Github/Seed_predation_US_Github2/Datasets/data_merged_6.RData")
-load("C:/Users/eleop/polybox/phD/PhD/R/Seed_predation/Seed_predation_US_Github/Seed_predation_US_Github2/Datasets/tree_gowth_data_2017.RData")
-load("C:/Users/eleop/polybox/phD/PhD/R/Seed_predation/Seed_predation_US_Github/Seed_predation_US_Github2/Datasets/to04_data_tree.RData")
-load("C:/Users/eleop/polybox/phD/PhD/R/Seed_predation/Seed_predation_US_Github/Seed_predation_US_Github2/Datasets/av06_data_tree.RData")
-load("C:/Users/eleop/polybox/phD/PhD/R/Seed_predation/Seed_predation_US_Github/Seed_predation_US_Github2/Datasets/ae10_data_tree.RData")
-load("C:/Users/eleop/polybox/phD/PhD/R/Seed_predation/Seed_predation_US_Github/Seed_predation_US_Github2/Datasets/to04_data.RData")
-load("C:/Users/eleop/polybox/phD/PhD/R/Seed_predation/Seed_predation_US_Github/Seed_predation_US_Github2/Datasets/av06_data.RData")
-load("C:/Users/eleop/polybox/phD/PhD/R/Seed_predation/Seed_predation_US_Github/Seed_predation_US_Github2/Datasets/ae10_data.RData")
+load("data_site_info.RData")
+load("data_cleaned_2.RData")
+load("all_tree_data.RData")
+load("tree_trap_5m.RData")
+
+
+head(data_site_info)
+
+# Calculate total and count-based averages for each species
+avg_dbh_species <- data_site_info %>%
+  group_by(species.y) %>%
+  summarise(
+    total_dbh = sum(as.numeric(gsub(",", ".", dbh)), na.rm = TRUE), # Total DBH
+    count = n(), # Count of observations
+    avg_dbh = total_dbh / count # Average DBH
+  )
+
+# Calculate total and count-based averages for each species at each site
+avg_dbh_species_site <- data_site_info %>%
+  group_by(stand_id, species.y) %>%
+  summarise(
+    total_dbh = sum(as.numeric(gsub(",", ".", dbh)), na.rm = TRUE), # Total DBH
+    count = n(), # Count of observations
+    avg_dbh = total_dbh / count # Average DBH
+  )
+
+
+# Plot average dbh for each species
+ggplot(avg_dbh_species, aes(x = species.y, y = avg_dbh, fill = species.y)) +
+  geom_bar(stat = "identity", color = "black") +
+  labs(
+    title = "Average DBH for Each Species",
+    x = "Species",
+    y = "Average DBH (cm)"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    legend.position = "none",
+    plot.title = element_text(hjust = 0.5),
+    axis.text.x = element_text(angle = 90, hjust = 1)
+  )
+
+# Plot average dbh for each species at each site
+ggplot(avg_dbh_species_site, aes(x = stand_id, y = avg_dbh, fill = species.y)) +
+  geom_bar(stat = "identity", position = "dodge", color = "black") +
+  labs(
+    title = "Average DBH for Each Species at Each Site",
+    x = "Site",
+    y = "Average DBH (cm)"
+  ) +
+  theme_minimal(base_size = 14) +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    axis.text.x = element_text(angle = 90, hjust = 1)
+  )
+
+
+
+
+
+
+
+
+data_site_info_dbh <- data_site_info %>%
+  group_by(Camera.number) %>%
+  summarize(dbh = paste(unique(dbh), collapse = ", ")) 
+colnames(data_site_info_dbh)[colnames(data_site_info_dbh) == "Camera.number"] <- "Camera"
+conspecific_with_dbh <- merge(conspecific, data_site_info_dbh, by = "Camera")
+save(conspecific_with_dbh, file = "C:/Users/eperret/polybox - Eleonore Perret (eleonore.perret@usys.ethz.ch)@polybox.ethz.ch/phD/PhD/R/Seed_predation/Seed_predation_US_Github/Seed_predation_US_Github2/Datasets/conspecific_with_dbh.RData")
 
 # DBH per site ---------------------------------------------------------------------
 

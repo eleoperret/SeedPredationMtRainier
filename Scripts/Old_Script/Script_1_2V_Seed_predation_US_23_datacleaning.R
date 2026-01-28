@@ -1,10 +1,12 @@
 ####Code for CAMERA TRAP EXPERIMENT US 2017
 ####Autumn 2023
 ####ETHZ Eléonore Perret
+#### Code for measuring seed removal and adding information about the neighboring trees. 
 ####dataset containing all infos for camera trap experiment US
 ##In this code, I first clean and then merge the selected information
 ##For my camera traps, I want to know the trees in their neighbourhood. 
-
+#Name of final cleaned dataset : data_cleaned_2
+#Name of original datasets: TO DO 
 
 # Loading librairies ------------------------------------------------------
 install.packages("sf")
@@ -16,33 +18,35 @@ library(dplyr)
 library(ggplot2)
 library(tidyr)
 
-
-list.files("C:/Users/eleop/polybox/phD/PhD/R/Seed_predation/Seed_predation_US_Github/Seed_predation_US_Github2/Datasets/")
-
-
-
-
 # Loading the data --------------------------------------------------------
-##Load the data
-#I need to load the dataset for the camera trap,seed predation data, the tree location and the tree characteristics.
-#First I load the data from the CAMERA TRAP DATA
-file_path <- "C:/Users/eleop/polybox/phD/PhD/R/Seed_predation/Seed_predation_US_Github/Seed_predation_US_Github2/Datasets/SeedPredation_First_week.csv"
-seed_predation <- read.csv(file_path,sep = ";")
-#Then I load the data from the overall sites LOCATION OF TREES IN PLOT DATA
-file_path <- "C:/Users/eleop/polybox/phD/PhD/R/Seed_predation/Seed_predation_US_Github/Seed_predation_US_Github2/Datasets/Cleaned_mapping_2017 Rainier.csv"
-map_tree_rainier <- read.csv(file_path, sep = ";")
-#First I load the data from the tree growth INFORMATION ON TREES DATA
-file_path <- "C:/Users/eleop/polybox/phD/PhD/R/Seed_predation/Seed_predation_US_Github/Seed_predation_US_Github2/Datasets/Cleaned_tree_growth_2017 Rainier.csv"
-tree_gowth_data<- read.csv(file_path,sep = ";")
-#Data from SEED PREDATION RESULTS
-data_name <- 'seed_data.csv'
-path <- "C:/Users/eleop/polybox/phD/PhD/R/Seed_predation/Seed_predation_US_Github/Seed_predation_US_Github2/"
-all_data_seed <- read.csv(paste(path, '/Datasets/', data_name, sep = ''), header = TRUE, sep = ";")
+# Set the working directory
+setwd("C:/Users/eperret/polybox - Eleonore Perret (eleonore.perret@usys.ethz.ch)@polybox.ethz.ch/phD/PhD/R/Seed_predation/Seed_predation_US_Github/Seed_predation_US_Github2")
+
+# List files in the main directory
+list.files()
+
+# List datasets in the "Datasets" folder
+datasets_dir <- "C:/Users/eperret/polybox - Eleonore Perret (eleonore.perret@usys.ethz.ch)@polybox.ethz.ch/phD/PhD/R/Seed_predation/Seed_predation_US_Github/Seed_predation_US_Github2/Datasets/"
+list.files(datasets_dir)
+
+# Function to read a CSV file
+read_data <- function(filename, folder = datasets_dir, sep = ";") {
+  filepath <- file.path(folder, filename)
+  read.csv(filepath, sep = sep)
+}
+
+# Load datasets
+seed_predation <- read_data("SeedPredation_First_week.csv")
+map_tree_rainier <- read_data("Cleaned_mapping_2017 Rainier.csv")
+tree_growth_data <- read_data("Cleaned_tree_growth_2017 Rainier.csv")
+all_data_seed<- read_data("seed_data.csv")
+
 
 # CAMERA TRAP DATA : Process_data ------------------------------------------------------------
 #Because I have empty rows after the row 27 (this comes from excel), I will first delete all the rows below
 seed_predation <- seed_predation %>% slice(1:27)
-# Selecting only the sites I need
+
+# Selecting only the sites I need from the tree Rainier data
 stand_data <- map_tree_rainier %>%
   filter(stand_id %in% c("AE10", "AV06", "TO04"))
 
@@ -74,7 +78,6 @@ stand_data_to04$y_coord <- as.numeric(gsub(",", ".", stand_data_to04$y_coord))
 camera_trap_tree_sf_to04 <- st_as_sf(camera_trap_tree_to04, coords = c("x_coord", "y_coord"))
 stand_data_sf_to04 <- st_as_sf(stand_data_to04, coords = c("x_coord", "y_coord"))
 distances <- st_distance(camera_trap_tree_sf_to04, stand_data_sf_to04)
-trees_within_5m_to04 <- distances <= 5
 trees_within_5m_camera_to04_lol<- st_join(camera_trap_tree_sf_to04, stand_data_sf_to04, join = st_is_within_distance, dist = 5)
 #av06
 camera_trap_tree_av06$x_coord <- as.numeric(gsub(",", ".", camera_trap_tree_av06$x_coord))
@@ -84,7 +87,6 @@ stand_data_av06$y_coord <- as.numeric(gsub(",", ".", stand_data_av06$y_coord))
 camera_trap_tree_sf_av06 <- st_as_sf(camera_trap_tree_av06, coords = c("x_coord", "y_coord"))
 stand_data_sf_av06 <- st_as_sf(stand_data_av06, coords = c("x_coord", "y_coord"))
 distances <- st_distance(camera_trap_tree_sf_av06, stand_data_sf_av06)
-trees_within_5m_av06 <- distances <= 5
 trees_within_5m_camera_av06_lol<- st_join(camera_trap_tree_sf_av06, stand_data_sf_av06, join = st_is_within_distance, dist = 5)
 #ae10
 camera_trap_tree_ae10$x_coord <- as.numeric(gsub(",", ".", camera_trap_tree_ae10$x_coord))
@@ -94,7 +96,6 @@ stand_data_ae10$y_coord <- as.numeric(gsub(",", ".", stand_data_ae10$y_coord))
 camera_trap_tree_sf_ae10 <- st_as_sf(camera_trap_tree_ae10, coords = c("x_coord", "y_coord"))
 stand_data_sf_ae10 <- st_as_sf(stand_data_ae10, coords = c("x_coord", "y_coord"))
 distances <- st_distance(camera_trap_tree_sf_ae10, stand_data_sf_ae10)
-trees_within_5m_ae10 <- distances <= 5
 trees_within_5m_camera_ae10_lol<- st_join(camera_trap_tree_sf_ae10, stand_data_sf_ae10, join = st_is_within_distance, dist = 5)
 #Create a dataset with all the information together
 stacked_df_lol <- rbind(trees_within_5m_camera_ae10_lol,trees_within_5m_camera_av06_lol,trees_within_5m_camera_to04_lol)
@@ -103,25 +104,25 @@ tree_trap_5m_lol <- merge(stacked_df_lol, seed_predation, by.x = "tag.x", by.y =
 
 #Saving the results: 
 #This is the data sets that contains all the trees around my camera trap (5m), for the tree tag info
-write.csv(tree_trap_5m_lol, file = "C:/Users/eleop/polybox/phD/PhD/R/Seed_predation/Seed_predation_US_Github/Seed_predation_US_Github2/Datasets/tree_trap_5m.csv", row.names = FALSE)
+#write.csv(tree_trap_5m_lol, file = "C:/Users/eleop/polybox/phD/PhD/R/Seed_predation/Seed_predation_US_Github/Seed_predation_US_Github2/Datasets/tree_trap_5m.csv", row.names = FALSE)
 save(tree_trap_5m_lol, file = "C:/Users/eleop/polybox/phD/PhD/R/Seed_predation/Seed_predation_US_Github/Seed_predation_US_Github2/Datasets/tree_trap_5m.RData")
 
 
 # TREE PROPERTIES --------------------------------------------------------
 #Working now with another dataset
 #Now I have a dataset that contains multiple years, so I want to select only the data from the last year which is 2017. 
-tree_gowth_data_2017<- tree_gowth_data %>%
+
+tree_growth_data_2017<- tree_growth_data %>%
   filter(year %in% c(2017))
-save(tree_gowth_data_2017, file = "C:/Users/eleop/polybox/phD/PhD/R/Seed_predation/Seed_predation_US_Github/Seed_predation_US_Github2/Datasets/tree_gowth_data_2017.RData")
-tree_gowth_data_2017_sites<- tree_gowth_data_2017 %>%
+tree_growth_data_2017_sites<- tree_growth_data_2017 %>%
   filter(stand_id %in% c("TO04","AV06","AE10"))
-save(tree_gowth_data_2017, file = "C:/Users/eleop/polybox/phD/PhD/R/Seed_predation/Seed_predation_US_Github/Seed_predation_US_Github2/Datasets/tree_gowth_data_2017.RData")
 
 #Now I want to have a dataset with everything. So I will merge it based on the tag of tree. 
 # Merge by 'tag' for tree_growth_data_2017 and 'tag.y' for tree_trap_5m
-all_tree_data <- inner_join(tree_gowth_data_2017_sites, tree_trap_5m_lol, by = c("tag" = "tag.x"))
+all_tree_data <- inner_join(tree_growth_data_2017_sites, tree_trap_5m_lol, by = "tag")
 ## Save cleaned data
-save(all_tree_data, file = "C:/Users/eleop/polybox/phD/PhD/R/Seed_predation/Seed_predation_US_Github/Seed_predation_US_Github2/Datasets/all_tree_data.RData")
+save(all_tree_data, file = "C:/Users/eperret/polybox - Eleonore Perret (eleonore.perret@usys.ethz.ch)@polybox.ethz.ch/phD/PhD/R/Seed_predation/Seed_predation_US_Github/Seed_predation_US_Github2/Datasets/all_tree_data.RData")
+save(tree_growth_data_2017, file = "C:/Users/eperret/polybox - Eleonore Perret (eleonore.perret@usys.ethz.ch)@polybox.ethz.ch/phD/PhD/R/Seed_predation/Seed_predation_US_Github/Seed_predation_US_Github2/Datasets/tree_growth_data_2017.RData")
 #Now I have the dataset with all the tree characteristics for the trees around my camera (5m)
 
 # SEED PREDATION RESULTS ---------------------------------------------------
@@ -211,6 +212,72 @@ for(i in 1:x){
 }
 
 
+# Additional method to see if the treatment is weighted. It is same result: Low > All > High
+# 
+# data_cleaned_2$Seeds.Remaining <- as.numeric(data_cleaned_2$Seeds.Remaining)
+# 
+# #Counting for the fact that the treatment contains different amount of species. 
+# # Get the unique species per treatment
+# species_per_treatment <- data_cleaned_2 %>%
+#   group_by(Treatment) %>%
+#   summarise(SpeciesCount = n_distinct(Seed_sp))
+# 
+# # Calculate weighted removal_per_all
+# data_cleaned_2bis <- data_cleaned_2 %>%
+#   group_by(Treatment, Seed_sp) %>%
+#   mutate(
+#     seeds_disposed = case_when(
+#       Seed_sp == "CANO" ~ seeds_disposed_CANO,
+#       Seed_sp == "ABAM" ~ seeds_disposed_ABAM,
+#       Seed_sp == "ABLA" ~ seeds_disposed_ABLA,
+#       Seed_sp == "PSME" ~ seeds_disposed_PSME,
+#       Seed_sp == "THPL" ~ seeds_disposed_THPL,
+#       Seed_sp == "TSHE" ~ seeds_disposed_TSHE
+#     ),
+#     seeds_eaten = seeds_disposed - Seeds.Remaining,
+#     relative_seed_eaten = (seeds_eaten / seeds_disposed) * 100
+#   ) %>%
+#   ungroup()
+# 
+# # Calculate overall removal_per_all weighted by species count
+# weighted_removal <- data_cleaned_2bis %>%
+#   group_by(Treatment) %>%
+#   summarise(
+#     removal_per_all = mean(relative_seed_eaten, na.rm = TRUE)
+#   )
+# 
+# 
+# data_cleaned_2bisbis <- data_cleaned_2 %>%
+#   group_by(Treatment, Seed_sp) %>%
+#   mutate(
+#     seeds_disposed = case_when(
+#       Seed_sp == "CANO" ~ seeds_disposed_CANO,
+#       Seed_sp == "ABAM" ~ seeds_disposed_ABAM,
+#       Seed_sp == "ABLA" ~ seeds_disposed_ABLA,
+#       Seed_sp == "PSME" ~ seeds_disposed_PSME,
+#       Seed_sp == "THPL" ~ seeds_disposed_THPL,
+#       Seed_sp == "TSHE" ~ seeds_disposed_TSHE
+#     ),
+#     seeds_eaten = seeds_disposed - Seeds.Remaining,
+#     relative_seed_eaten = (seeds_eaten / seeds_disposed),
+#     # Weight based on number of species in the treatment
+#     species_count = case_when(
+#       Treatment == "Low" ~ 3,
+#       Treatment == "High" ~ 3,
+#       Treatment == "All" ~ 6
+#     ),
+#     removal_per_all_weighted = (relative_seed_eaten / species_count) * 100
+#   ) %>%
+#   ungroup()
+# 
+# # Calculate overall removal_per_all weighted by species count
+# weighted_remova_2 <- data_cleaned_2bisbis %>%
+#   group_by(Treatment) %>%
+#   summarise(
+#     removal_per_all = mean(relative_seed_eaten, na.rm = TRUE)
+#   )
+
+
 # Save the cleaned data as an RData file
-save(data_cleaned_2, file = "C:/Users/eleop/polybox/phD/PhD/R/Seed_predation/Seed_predation_US_Github/Seed_predation_US_Github2/Datasets/data_cleaned_2.RData")
+save(data_cleaned_2, file = "C:/Users/eperret/polybox - Eleonore Perret (eleonore.perret@usys.ethz.ch)@polybox.ethz.ch/phD/PhD/R/Seed_predation/Seed_predation_US_Github/Seed_predation_US_Github2/Datasets/data_cleaned_2.RData")
 
