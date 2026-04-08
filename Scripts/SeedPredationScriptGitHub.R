@@ -1,46 +1,27 @@
 ####Code for CAMERA TRAP EXPERIMENT US 2017
-####Last modified : 05.02.2026
+####Last modified : 08.04.2026
 ####ETHZ Eléonore Perret
 #### Code for measuring seed removal.  
 
 # Loading libraries ------------------------------------------------------
-# install.packages("dplyr")
-# install.packages("ggplot2")
-# install.packages("tidyr")
-# install-packages("car")
-#install.packages("ggpubr")
-#install.packages("DHARMa")
-#install.packages("emmeans")
-#install.packages("ggpattern")
-#install.packages("insight")
 library(readxl)
 library(dplyr)
 library(ggplot2)
-library(betareg)
 library(glmmTMB)
 library(lme4)
 library(MASS)
 library(DHARMa)
 library(emmeans)
-library(car)
-
 library(tidyr)
-library(car)
-
-library(ggpubr)
-
-library(ggpattern)
 
 
 
-library(sjPlot)
-library(ggeffects)
 
 
 # Loading the data --------------------------------------------------------
 # Set the working directory
 getwd()
-setwd("C:/Users/eperret/polybox - Eleonore Perret (eleonore.perret@usys.ethz.ch)@polybox.ethz.ch/phD/PhD/R/Seed_predation/Seed_predation_US_Github2")
+setwd("")
 
 list.files("Datasets")
 
@@ -475,7 +456,7 @@ data_subset$ObsID <- factor(1:nrow(data_subset))
 data_subset_2$ObsID <- factor(1:nrow(data_subset_2))
 
 #Model : Low elevation seed species vs all treatment
-glmer_modelOLRE_New3 <- glmer(cbind(Success, Seeds.Placed - Success) ~ Treatment + Seed_sp +(1 | Camera) + (1 | ObsID) + (1 | Week),family = binomial,data = data_subset,control = glmerControl(optimizer = "bobyqa",optCtrl = list(maxfun = 2e5)))
+glmer_modelOLRE_New3 <- glmer(cbind(Success, Seeds.Placed - Success) ~ Treatment * Seed_sp +(1 | Camera) + (1 | ObsID) + (1 | Week),family = binomial,data = data_subset,control = glmerControl(optimizer = "bobyqa",optCtrl = list(maxfun = 2e5)))
 
 #Checking the model for low elevation seed species
 sim_res <- simulateResiduals(fittedModel = glmer_modelOLRE_New3, plot = TRUE)
@@ -484,15 +465,15 @@ summary(glmer_modelOLRE_New3)
 
 # POST-HOC Test
 # Estimated marginal means for Treatment for the low seed species
-em_treatment_low <- emmeans(glmer_modelOLRE_New3, ~ Treatment , type = "response")
+em_treatment_low <- emmeans(glmer_modelOLRE_New3, ~ Treatment | Seed_sp, type = "response")
 em_treatment_low
-treatment_contrasts <- pairs(em_treatment_low, adjust = "tukey")
-
+treatment_contrasts_low <- pairs(em_treatment_low, adjust = "tukey")
+treatment_contrasts_low
 
 #there is no statistical difference between the treatments. Seeds are removed the same no matter if there are other seed species around or not. 
 
 #Model : high elevation seed species vs all treatment
-glmer_modelOLRE_New4 <- glmer(cbind(Success, Seeds.Placed - Success) ~ Treatment + Seed_sp+(1 | Camera) + (1 | ObsID) + (1|Week) ,family = binomial,data = data_subset_2,control = glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 2e7)))
+glmer_modelOLRE_New4 <- glmer(cbind(Success, Seeds.Placed - Success) ~ Treatment * Seed_sp+(1 | Camera) + (1 | ObsID) + (1|Week) ,family = binomial,data = data_subset_2,control = glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 2e7)))
 
 #Checking the model
 sim_res <- simulateResiduals(fittedModel = glmer_modelOLRE_New4, plot = TRUE)
@@ -501,12 +482,10 @@ summary(glmer_modelOLRE_New4)
 
 # POST-HOC Test
 # Estimated marginal means for Treatment for the high seed species
-em_treatment_high <- emmeans(glmer_modelOLRE_New4, ~ Treatment , type = "response")
+em_treatment_high <- emmeans(glmer_modelOLRE_New4, ~ Treatment | Seed_sp, type = "response")
 em_treatment_high
 treatment_contrasts_high <- pairs(em_treatment_high, adjust = "tukey")
-
+treatment_contrasts_high
 #there is no statistical difference between the treatments. Seeds are removed the same no matter if there are other seed species around or not.
-
-###To check and redo! 
 
 
