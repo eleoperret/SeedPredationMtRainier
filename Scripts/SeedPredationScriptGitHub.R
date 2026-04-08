@@ -13,19 +13,26 @@
 #install.packages("emmeans")
 #install.packages("ggpattern")
 #install.packages("insight")
-library(DHARMa)
+library(readxl)
 library(dplyr)
 library(ggplot2)
-library(tidyr)
-library(car)
-library(lme4)
-library(ggpubr)
-library(emmeans)
-library(ggpattern)
-library(readxl)
-library(MASS)
 library(betareg)
 library(glmmTMB)
+library(lme4)
+library(MASS)
+library(DHARMa)
+library(emmeans)
+library(car)
+
+library(tidyr)
+library(car)
+
+library(ggpubr)
+
+library(ggpattern)
+
+
+
 library(sjPlot)
 library(ggeffects)
 
@@ -33,20 +40,23 @@ library(ggeffects)
 # Loading the data --------------------------------------------------------
 # Set the working directory
 getwd()
-setwd("")
+setwd("C:/Users/eperret/polybox - Eleonore Perret (eleonore.perret@usys.ethz.ch)@polybox.ethz.ch/phD/PhD/R/Seed_predation/Seed_predation_US_Github2")
+
+list.files("Datasets")
 
 # Load datasets
-seed_predation <- read.csv("SeedPredation_First_week.csv", sep=";")
-all_data_seed<- read.csv("seed_data.csv",sep= ";")
-predators_data <- read_excel("camera_data.xlsx")
-#Not necesserary if you go through the SEED PREDATION PROCESS PART.
-load("data_cleaned_2.RData") #Done after cleaning the data. See Seed predation results
+#Datasets: camera data contains the information about the results of the camera traps
+#Dataset: seed data contains all information about the cafeteria trial
+#Dataset: SeedPredation_First_week contains the information about the experimental design (camera number, localisation etc..)
+seed_predation <- read.csv("Datasets/SeedPredation_First_week.csv", sep=";")
+all_data_seed<- read.csv("Datasets/seed_data.csv",sep= ";")
+predators_data <- read_excel("Datasets/camera_data.xlsx")
 
 # CAMERA TRAP DATA : Process_data ------------------------------------------------------------
 #Because I have empty rows after the row 27 (this comes from excel), I will first delete all the rows below
 seed_predation <- seed_predation %>% slice(1:27)
 
-# SEED PREDATION: Process data -End Product (data_cleaned_2.RData) ---------------------------------------------------
+# SEED PREDATION: Process data -End Product (data_cleaned_2) ---------------------------------------------------
 # Defining the number of seeds disposed for each species
 seeds_disposed_ABAM <- 5
 seeds_disposed_ABLA <- 20
@@ -82,6 +92,7 @@ for(i in 1:x){
 }
 
 #Based on the amount of seeds disposed at the beginning
+#Percentage of seeds eaten based on the amount offered
 data_cleaned_2$relative_seed_eaten<-c(1:x)
 for(i in 1:x){
   if(data_cleaned_2$Seed_sp[i]=="CANO"){
@@ -100,7 +111,7 @@ for(i in 1:x){
 }
 colnames(data_cleaned_2)[colnames(data_cleaned_2) == "relative_seed_eaten"] <- "removal_per_all"
 
-#Instead of a percentage, just a number 
+#Instead of a percentage, just a number  
 data_cleaned_2$seeds<-c(1:x)
 for(i in 1:x){
   if(data_cleaned_2$Seed_sp[i]=="CANO"){
@@ -123,21 +134,25 @@ for(i in 1:x){
 data_cleaned_2$Seeds.Remaining <- as.numeric(data_cleaned_2$Seeds.Remaining)
 # New variable 'Seeds.Placed' (seeds eaten + seeds remaining)
 data_cleaned_2$Seeds.Placed <- data_cleaned_2$seeds_eaten + data_cleaned_2$Seeds.Remaining
-# New variable 'Success' (seeds eaten)
-data_cleaned_2$Success <- data_cleaned_2$Seeds.Remaining
+# New variable 'Success' (seeds not eaten)
+data_cleaned_2$Success <- data_cleaned_2$seeds_eaten
 
-# Now 'Success' is the number of successes (seeds eaten), and 'Seeds.Placed' is the number of trials.-- BINOMIAL RESPONSE
+# Now 'Success' is the number of successes (seeds not eaten), and 'Seeds.Placed' is the number of trials.-- BINOMIAL RESPONSE
 
 #Adding seed weights
 species_weights <- c(ABAM = 0.024, ABLA = 0.02, CANO = 0.004, PSME = 0.007, THPL = 0.001, TSHE = 0.001)
 data_cleaned_2$seed_weight <- species_weights[data_cleaned_2$Seed_sp]
 
+
+
+
+
 # Overall check-------------------------------------------------------------------
 #Removal
 overall_removal <- data_cleaned_2 %>%
-  mutate(removal_prop = Success / Seeds.Placed) %>% 
+  mutate(removal_prop = seeds_eaten / Seeds.Placed) %>% 
   summarize(mean_removal= mean(removal_prop, na.rm = TRUE))
-overall_removal
+
 
 # Species
 mean_se_data <- data_cleaned_2 %>%
@@ -176,7 +191,11 @@ ggplot(mean_se_data_treatment,aes(x = Treatment, y = mean_seeds, fill =   Treatm
 
 # Seed predator density analysis ------------------------------------------
 
-# Filter to rows where an animal was present and the Species_ID is not missing or "NA" and were the animal was on the tray
+# For Stand
+predators_data$Stand <- factor(predators_data$Stand,levels = c("TO04", "AV06", "AE10"),labels = c("Low", "Mid", "High"))
+# For Species_ID
+predators_data$Species_ID <- factor(predators_data$Species_ID,  levels = c("Peromyscus maniculatus", "Tamias sp", "Lepus americanus", "Bird", "Flying squirrel", "Shrew?", "vole?", "Zapus?", "???"),  labels = c("P. maniculatus", "Tamias spp.", "L. americanus", "Birds", "G. oregonensis", "Sorex spp.", "Microtus spp.", "Zapus spp.", "Unidentified vertebrates"))
+
 predator_data_clean <- predators_data %>%
   filter(Animal_presence == "Yes", !is.na(Species_ID), Species_ID != "NA")
 
@@ -196,7 +215,7 @@ predator_data_clean_week<- predator_data_clean %>%
   group_by (Stand)%>%
   summarise (week= n_distinct(Week))
 #AE10 only has 3 weeks... so I will make sure it is standartized
-sampling_effort <- tibble(Stand = c("TO04", "AV06", "AE10"), Weeks_sampled = c(4, 4, 3))
+sampling_effort <- tibble(Stand = c("Low", "Mid", "High"), Weeks_sampled = c(4, 4, 3))
 
 
 #Preparing data for model using all seed predators (not only if interacted with the tray)
@@ -229,34 +248,31 @@ predator_density_site_species_standardized <- predator_density_site_species %>%
 
 #Preparing for the plot
 #Changing names for clarity and plots 
-# For Stand
-predator_density_site_species_standardized$Stand <- factor(predator_density_site_species_standardized$Stand,levels = c("TO04", "AV06", "AE10"),labels = c("Low", "Mid", "High"))
-# For Species_ID
-predator_density_site_species_standardized$Species_ID <- factor(  predator_density_site_species_standardized$Species_ID,  levels = c("Peromyscus maniculatus", "Tamias sp", "Lepus americanus", "Bird", "Flying squirrel", "Shrew?", "vole?", "Zapus?", "???"),  labels = c("Peromyscus maniculatus", "Tamias sp.", "Lepus americanus", "Birds", "Glaucomys oregonensis", "Shrew sp.", "Vole sp.", "Zapus sp.", "Not identified"))
 
 #Color for species
 species_colors <- c(
-  "Peromyscus maniculatus" = "#332288",  # dark blue
-  "Tamias sp." = "#88CCEE",               # sky blue
-  "Lepus americanus" = "#117733",         # green
+  "P. maniculatus" = "#332288",  # dark blue
+  "Tamias spp." = "#88CCEE",               # sky blue
+  "L. americanus" = "#117733",         # green
   "Birds" = "#DDCC77",                    # mustard yellow
-  "Glaucomys oregonensis" = "#CC6677",   # rosy pink
-  "Shrew sp." = "#AA4499",                # purple
-  "Vole sp." = "#44AA99",                 # teal
-  "Zapus sp." = "#999933",                # olive
-  "Not identified" = "#DDDDDD"            # light gray
+  "G. oregonensis" = "#CC6677",   # rosy pink
+  "Sorex spp." = "#AA4499",                # purple
+  "Microtus spp." = "#44AA99",                 # teal
+  "Zapus spp." = "#999933",                # olive
+  "Unidentified vertebrates" = "#DDDDDD"            # light gray
 )
 
 #Normal (not standardized per week)
 ggplot(predator_density_site_species, aes(x = Stand, y = predator_detections, fill = Species_ID)) +
   geom_bar(stat = "identity", position = "stack") +
-  labs(title = "Predator Detections per Site and Species",x = "Site (Stand)",y = "Number of Detections",fill = "Species") +
+  scale_fill_manual(values = species_colors) +
+  labs(title = "Predator Detections per Site and Species",x = "Site",y = "Number of Detections",fill = "Species") +
   theme_minimal()
 #Standardized
 ggplot(predator_density_site_species_standardized, aes(x = Stand, y = detections_per_week, fill = Species_ID)) +
   geom_bar(stat = "identity", position = "stack") +
   scale_fill_manual(values = species_colors) +
-  labs(title = "Predator Detections per Site and Species",x = "Stand",y = "Number of Detections",fill = "Species") +
+  labs(title = "Predator Detections per Site and Species",x = "Site",y = "Number of Detections",fill = "Species") +
   theme_minimal()
 #Hudge difference!
 
@@ -264,6 +280,7 @@ ggplot(predator_density_site_species_standardized, aes(x = Stand, y = detections
 
 #Model (dataset = predator_density_site_species_standartized)
 #Trying a model to know if some species get detected more often than others and are some sites associated with more predator detections?
+
 
 #I tried different model but either they could not converge or they showed overdispersion. Here is the model that makes the most sense out of the data and that is representing our data. 
 model_nb <- glm.nb(predator_detections ~ Stand + Species_ID + offset(log(Weeks_sampled)),data = predator_density_site_species_standardized,control = glm.control(maxit = 50))
@@ -273,6 +290,9 @@ sim_res_nb <- simulateResiduals(model_nb)
 plot(sim_res_nb)
 #Looks not super good... but the closest I could get. Still shows that there are differences in detections among species and that for the high site, the detections of Tamia are higher.  
 
+em_camera_stand <- emmeans(model_nb,~ Stand, type = "response",at = list(Weeks_sampled = 1))  # fix all predictions to 1 week
+pairwise_stand <- pairs(em_camera_stand)
+pairwise_stand
 
 #Plot for the manuscript
 # Okabe-Ito colorblind-friendly palette (8 colors)
@@ -290,15 +310,15 @@ cb_palette <- c(
 
 # Assign to your species manually (truncate or repeat if needed)
 species_colors_cb <- c(
-  "Peromyscus maniculatus" = "#0072B2",  # blue
-  "Tamias sp."             = "#E69F00",  # orange
-  "Lepus americanus"       = "#009E73",  # green
+  "P. maniculatus" = "#0072B2",  # blue
+  "Tamias spp."             = "#E69F00",  # orange
+  "L. americanus"       = "#009E73",  # green
   "Birds"                  = "#F0E442",  # yellow
-  "Glaucomys oregonensis"  = "#D55E00",  # red
-  "Shrew sp."              = "#CC79A7",  # purple
-  "Vole sp."               = "#56B4E9",  # light blue
-  "Zapus sp."              = "#999999",   # grey
-  "Not identified"         = "#800080"
+  "G. oregonensis"  = "#D55E00",  # red
+  "Sorex spp."              = "#CC79A7",  # purple
+  "Microtus spp."               = "#56B4E9",  # light blue
+  "Zapus spp."              = "#999999",   # grey
+  "Unidentified vertebrates"         = "#800080"
 )
 
 data_pie <- predator_density_site_species_standardized %>%
@@ -317,6 +337,8 @@ data_doughnut_norm <- data_doughnut %>%
   group_by(Stand) %>%
   mutate(perc = total_detections / sum(total_detections)) %>%
   ungroup()
+
+data_doughnut_norm$Stand <- factor(data_doughnut_norm$Stand, levels = c("Low", "Mid", "High"))
 
 ggplot(data_doughnut_norm, aes(x = 2, y = perc, fill = Species_ID)) +
   geom_col(color = "white", width = 1) +
@@ -357,55 +379,29 @@ summary(glmer_modelOLRE_New)
 em_stand <- emmeans(glmer_modelOLRE_New, ~ Stand , type = "response")
 em_stand_df <- as.data.frame(em_stand)
 stand_contrasts <- pairs(em_stand, adjust = "tukey")
+summary(em_stand)
 em_seeds <- emmeans(glmer_modelOLRE_New, ~ Seed_sp , type = "response")
 em_seeds_df <- as.data.frame(em_seeds)
 seed_contrasts <- pairs(em_seeds, adjust = "tukey")
 summary(seed_contrasts)
 
-df_contrasts <- as.data.frame(summary(seed_contrasts, infer = c(TRUE, TRUE), type = "response"))
-ggplot(df_contrasts, aes(x = contrast, y = odds.ratio)) +
-  geom_point() +
-  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL), width = 0.2) +
-  geom_hline(yintercept = 1, linetype = "dashed") +   
-  coord_flip() +                                     
-  theme_minimal() +
-  labs(y = "Odds ratio (with 95% CI)",x = "Contrast",title = "Pairwise contrasts between species")
+em_all <- emmeans(glmer_modelOLRE_New, ~ Stand + Seed_sp , type = "response")
+em_df <- as.data.frame(em_all)
 
-df_contrasts_2 <- as.data.frame(summary(stand_contrasts, infer = c(TRUE, TRUE), type = "response"))
-ggplot(df_contrasts_2, aes(x = contrast, y = odds.ratio)) +
-  geom_point() +
-  geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL), width = 0.2) +
-  geom_hline(yintercept = 1, linetype = "dashed") +   # reference line (no difference)
-  coord_flip() +                                      # flip for readability
-  theme_minimal() +
-  labs(y = "Odds ratio (with 95% CI)",x = "Contrast",title = "Pairwise contrasts between Stand")
-
-em_both <- emmeans(glmer_modelOLRE_New, ~ Stand + Seed_sp, type = "response")
-all_contrasts <- pairs(em_both, adjust = "tukey")
-em_df <- as.data.frame(em_both)
-
-# Pairwise comparisons *within* Stand across species:
-pairs(em_both, by = "Stand")
-pairs(em_both, by = "Seed_sp")
-
-#OVERALL PLOT
-# Custom dodge width
-dodge_width <- 0.5
-#Reordering for plots
+em_df$Seed_sp <- factor(em_df$Seed_sp,levels = c("Thuja plicata","Tsuga heterophylla","Pseudotsuga menziesii","Abies amabilis","Callitropsis nootkatensis","Abies lasiocarpa"))
 em_df$Stand <- factor(em_df$Stand,levels = c("Low", "Mid", "High"))
-em_df$Seed_sp <- factor(em_df$Seed_sp,levels = c("Thuja plicata", "Tsuga heterophylla","Pseudotsuga menziesii","Abies amabilis", "Callitropsis nootkatensis","Abies lasiocarpa"))
 
 #Plot for manuscript
 ggplot(em_df, aes(x = Stand, y = prob, color = Stand, shape = Seed_sp)) +
   # Species-level estimates
-  geom_point(position = position_dodge(width = 0.6),size = 5) +
+  geom_point(position = position_dodge(width = 0.6),size = 7) +
   geom_errorbar(aes(ymin = asymp.LCL, ymax = asymp.UCL),position = position_dodge(width = 0.6),width = 0.2) +
   # Stand means as dotted horizontal lines
   geom_hline(data = em_stand_df,aes(yintercept = prob, color = Stand),linetype = "dotted",linewidth = 1,inherit.aes   = FALSE) +
   # Colors per stand
-  scale_color_manual(values = c("Low"  = "darkred","Mid"  = "darkorange","High" = "lightblue")) +
+  scale_color_manual(values = c("Low"  = "darkred","Mid"  = "darkorange","High" = "blue")) +
   # Shapes per species
-  scale_shape_manual(values = c("Thuja plicata" = 16,"Tsuga heterophylla" = 17,"Pseudotsuga menziesii" = 15,"Abies   lasiocarpa" = 3,"Callitropsis nootkatensis" = 7,"Abies amabilis" = 8)) +
+  scale_shape_manual(values = c("Thuja plicata" = 16,"Tsuga heterophylla" = 17,"Pseudotsuga menziesii" = 15,"Abies lasiocarpa" = 3,"Callitropsis nootkatensis" = 7,"Abies amabilis" = 8)) +
   labs(title = "Estimated Probability of Seed Removal",y = "Probability of Removal",x = "Stand",color = "Stand",     shape = "Seed species") +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 30, hjust = 1),legend.position = "right")
@@ -421,8 +417,8 @@ ggplot(em_df, aes(x = Stand, y = prob, color = Stand, shape = Seed_sp)) +
 #(low vs high species)
 data_cleaned_2_grouped <- data_cleaned_2 %>%
   mutate(Elevation_group = case_when(
-    Seed_sp %in% c("Abies lasiocarpa", "Abies amabilis", "Callitropsis nootkatensis") ~ "High",
-    Seed_sp %in% c("Thuja plicata", "Tsuga heterophylla", "Pseudotsuga menziesii") ~ "Low",
+    Seed_sp %in% c("ABLA", "ABAM", "CANO") ~ "High",
+    Seed_sp %in% c("THPL", "TSHE", "PSME") ~ "Low",
     TRUE ~ NA_character_
   ))
 
@@ -436,14 +432,14 @@ testDispersion(model_bb)
 summary(model_bb)
 
 # POST-HOC Test
-em2 <- emmeans(model_bb, ~ Elevation_group * Stand, type = "response")
+em2 <- emmeans(model_bb, ~ Stand * Elevation_group, type = "response")
+
 pairs(em2, by = "Stand")
 pairs(em2, by = "Elevation_group")
-pairs(em2)
 em_df2 <- as.data.frame(em2)
 
-em_df2$Stand <- factor(em_df2$Stand,levels = c("Low", "Mid", "High"))
 em_df2$Elevation_group <- factor(em_df2$Elevation_group,levels = c("Low", "High"))
+em_df2$Stand <- factor(em_df2$Stand,levels = c("TO04", "AV06", "AE10"),labels = c("Low", "Mid", "High"))
 
 # Plot of removal probability by stand and elevation group.
 #Plot for the manuscript
@@ -458,14 +454,6 @@ ggplot(em_df2,aes(x = Stand,y = prob,color = Elevation_group,group = Elevation_g
   theme_minimal() +
   theme(text = element_text(size = 14))
 
-#Checking between elevation group is there is a statistical differemce
-em_elev <- emmeans(glmer_modelOLRE_New2, ~ Elevation_group, type = "response")
-pairs(em_elev)#There is a statistical difference between the groups. The group Low in general is more removed than the group high which make sense.
-
-em_stand <- emmeans(glmer_modelOLRE_New2, ~ Stand, type = "response")
-pairs(em_stand)
-#Same results as the previous model, the stand "high" as the highest predation rates
-
 
 ##**Question 3**Does seed community composition influence seed removal? Specifically, are seeds more or less likely to be removed when presented in novel versus familiar seed communities??
 
@@ -474,19 +462,20 @@ pairs(em_stand)
 #Treatment Low
 data_subset <- data_cleaned_2 %>% 
   filter(!(Treatment =="High"))
-data_subset <- data_cleaned_2 %>% 
-  filter(!(Seed_sp %in% c("Abies amabilis", "Callitropsis nootkatensis","Abies lasiocarpa")))
+data_subset <- data_subset %>% 
+  filter(!(Seed_sp %in% c("ABAM", "CANO","ABLA")))
 #Treatment high
 data_subset_2 <- data_cleaned_2 %>% 
   filter(!(Treatment =="Low"))
-data_subset_2 <- data_cleaned_2 %>% 
-  filter(!(Seed_sp %in% c("Pseudotsuga menziesii", "Thuja plicata", "Tsuga heterophylla")))
+data_subset_2 <- data_subset_2 %>% 
+  filter(!(Seed_sp %in% c("PSME", "THPL", "TSHE")))
 
 #This is the best model as I can apply it to both subset data and make the results comparable. Due to the high predation rate of P. menziesii, it was impossible to create a model that we checking for residuals and overdispersion made sense. This is why I decided to look at overall if the treatment affected seed removal based on species. Looking also at the plots of the removal per treatment (see section above: Overall check), there was no clear distnctions between the treatments as which indicates that there is no a strong reason to do otherwise. 
 data_subset$ObsID <- factor(1:nrow(data_subset))
+data_subset_2$ObsID <- factor(1:nrow(data_subset_2))
 
 #Model : Low elevation seed species vs all treatment
-glmer_modelOLRE_New3 <- glmer(cbind(Success, Seeds.Placed - Success) ~ Treatment * Seed_sp +(1 | Camera) + (1 | ObsID) + (1 | Week),family = binomial,data = data_subset,control = glmerControl(optimizer = "bobyqa",optCtrl = list(maxfun = 2e5)))
+glmer_modelOLRE_New3 <- glmer(cbind(Success, Seeds.Placed - Success) ~ Treatment + Seed_sp +(1 | Camera) + (1 | ObsID) + (1 | Week),family = binomial,data = data_subset,control = glmerControl(optimizer = "bobyqa",optCtrl = list(maxfun = 2e5)))
 
 #Checking the model for low elevation seed species
 sim_res <- simulateResiduals(fittedModel = glmer_modelOLRE_New3, plot = TRUE)
@@ -494,17 +483,16 @@ testDispersion(sim_res)#does not show overdispersion
 summary(glmer_modelOLRE_New3)
 
 # POST-HOC Test
-# Estimated marginal means for Treatment per species
-emm <- emmeans(glmer_modelOLRE_New3, ~ Treatment | Seed_sp, type = "response")
+# Estimated marginal means for Treatment for the low seed species
+em_treatment_low <- emmeans(glmer_modelOLRE_New3, ~ Treatment , type = "response")
+em_treatment_low
+treatment_contrasts <- pairs(em_treatment_low, adjust = "tukey")
 
-# Pairwise comparison: removal vs control
-pairwise_results1 <- contrast(emm, method = "pairwise")
-pairwise_results1
 
 #there is no statistical difference between the treatments. Seeds are removed the same no matter if there are other seed species around or not. 
 
 #Model : high elevation seed species vs all treatment
-glmer_modelOLRE_New4 <- glmer(cbind(Success, Seeds.Placed - Success) ~ Treatment * Seed_sp+(1 | Camera) + (1 | ObsID) + (1|Week) ,family = binomial,data = data_subset_2,control = glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 2e7)))
+glmer_modelOLRE_New4 <- glmer(cbind(Success, Seeds.Placed - Success) ~ Treatment + Seed_sp+(1 | Camera) + (1 | ObsID) + (1|Week) ,family = binomial,data = data_subset_2,control = glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 2e7)))
 
 #Checking the model
 sim_res <- simulateResiduals(fittedModel = glmer_modelOLRE_New4, plot = TRUE)
@@ -512,13 +500,13 @@ testDispersion(sim_res)#does not show overdispersion
 summary(glmer_modelOLRE_New4)
 
 # POST-HOC Test
-# Estimated marginal means for Treatment per species × stand
-emm <- emmeans(glmer_modelOLRE_New4, ~ Treatment | Seed_sp, type = "response")
+# Estimated marginal means for Treatment for the high seed species
+em_treatment_high <- emmeans(glmer_modelOLRE_New4, ~ Treatment , type = "response")
+em_treatment_high
+treatment_contrasts_high <- pairs(em_treatment_high, adjust = "tukey")
 
-# Pairwise comparison: removal vs control
-pairwise_results2 <- contrast(emm, method = "pairwise")
-pairwise_results2
+#there is no statistical difference between the treatments. Seeds are removed the same no matter if there are other seed species around or not.
 
-#there is no statistical difference between the treatments. Seeds are removed the same no matter if there are other seed species around or not. 
+###To check and redo! 
 
 
