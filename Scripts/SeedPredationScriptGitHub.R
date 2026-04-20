@@ -13,6 +13,7 @@ library(MASS)
 library(DHARMa)
 library(emmeans)
 library(tidyr)
+library(ggpattern)
 
 
 
@@ -21,7 +22,7 @@ library(tidyr)
 # Loading the data --------------------------------------------------------
 # Set the working directory
 getwd()
-setwd("")
+setwd("C:/Users/eperret/polybox - Eleonore Perret (eleonore.perret@usys.ethz.ch)@polybox.ethz.ch/phD/PhD/R/Seed_predation/Seed_predation_US_Github2")
 
 list.files("Datasets")
 
@@ -302,6 +303,18 @@ species_colors_cb <- c(
   "Unidentified vertebrates"         = "#800080"
 )
 
+
+species_colors_cb <- c(
+  "P. maniculatus"         = "#0072B2",  # blue
+  "Tamia spp."             = "#E69F00",  # orange
+  "L. americanus"          = "#009E73",  # bluish-green
+  "Birds"                  = "#F0E442",  # yellow
+  "G. oregonensis"         = "#D55E00",  # vermillion
+  "Sorex spp."             = "#CC79A7",  # pink/purple
+  "Microtus spp."          = "#56B4E9",  # sky blue
+  "Zapus spp."             = "#000000",  # black
+  "Unidentified vertebrates" = "#999999" # grey
+)
 data_pie <- predator_density_site_species_standardized %>%
   #filter(Species_ID != "Not identified") %>%  # remove unidentified species
   group_by(Species_ID) %>%
@@ -330,6 +343,8 @@ ggplot(data_doughnut_norm, aes(x = 2, y = perc, fill = Species_ID)) +
   theme_void() +
   labs(title = "Predator detections per site (doughnut chart)",fill = "Species") +
   theme(legend.position = "right",strip.text = element_text(size = 10, face = "bold"))
+
+
 
 # MODEL FOR SEED REMOVAL------------------------------------------------------------------
 #The models are based on ecological questions. I want them to follow my research questions. 
@@ -380,12 +395,14 @@ ggplot(em_df, aes(x = Stand, y = prob, color = Stand, shape = Seed_sp)) +
   # Stand means as dotted horizontal lines
   geom_hline(data = em_stand_df,aes(yintercept = prob, color = Stand),linetype = "dotted",linewidth = 1,inherit.aes   = FALSE) +
   # Colors per stand
-  scale_color_manual(values = c("Low"  = "darkred","Mid"  = "darkorange","High" = "blue")) +
+  scale_color_manual(values = c("Low"  = "#E69F00","Mid"  = "#009E73","High" = "#0072B2")) +
   # Shapes per species
   scale_shape_manual(values = c("Thuja plicata" = 16,"Tsuga heterophylla" = 17,"Pseudotsuga menziesii" = 15,"Abies lasiocarpa" = 3,"Callitropsis nootkatensis" = 7,"Abies amabilis" = 8)) +
   labs(title = "Estimated Probability of Seed Removal",y = "Probability of Removal",x = "Stand",color = "Stand",     shape = "Seed species") +
   theme_minimal() +
   theme(axis.text.x = element_text(angle = 30, hjust = 1),legend.position = "right")
+
+
 
 
 ##**Question 3**
@@ -398,13 +415,11 @@ ggplot(em_df, aes(x = Stand, y = prob, color = Stand, shape = Seed_sp)) +
 #(low vs high species)
 data_cleaned_2_grouped <- data_cleaned_2 %>%
   mutate(Elevation_group = case_when(
-    Seed_sp %in% c("ABLA", "ABAM", "CANO") ~ "High",
-    Seed_sp %in% c("THPL", "TSHE", "PSME") ~ "Low",
+    Seed_sp %in% c("Abies lasiocarpa", "Abies amabilis", "Callitropsis nootkatensis") ~ "High",
+    Seed_sp %in% c("Thuja plicata", "Tsuga heterophylla", "Pseudotsuga menziesii") ~ "Low",
     TRUE ~ NA_character_
   ))
 
-
-#This model solves this underdispersion problem.
 model_bb <- glmmTMB(cbind(Success, Seeds.Placed - Success) ~ Elevation_group * Stand +(1 | Camera) + (1 | ObsID) + (1|Week),data = data_cleaned_2_grouped,family = betabinomial())
 
 #Checking model
@@ -419,8 +434,8 @@ pairs(em2, by = "Stand")
 pairs(em2, by = "Elevation_group")
 em_df2 <- as.data.frame(em2)
 
-em_df2$Elevation_group <- factor(em_df2$Elevation_group,levels = c("Low", "High"))
-em_df2$Stand <- factor(em_df2$Stand,levels = c("TO04", "AV06", "AE10"),labels = c("Low", "Mid", "High"))
+# em_df2$Elevation_group <- factor(em_df2$Elevation_group,levels = c("Low", "High"))
+em_df2$Stand <- factor(em_df2$Stand,levels = c("Low", "Mid", "High"))
 
 # Plot of removal probability by stand and elevation group.
 #Plot for the manuscript
@@ -444,12 +459,14 @@ ggplot(em_df2,aes(x = Stand,y = prob,color = Elevation_group,group = Elevation_g
 data_subset <- data_cleaned_2 %>% 
   filter(!(Treatment =="High"))
 data_subset <- data_subset %>% 
-  filter(!(Seed_sp %in% c("ABAM", "CANO","ABLA")))
+  filter(!(Seed_sp %in% c("Abies amabilis", "Callitropsis nootkatensis","Abies lasiocarpa")))
 #Treatment high
 data_subset_2 <- data_cleaned_2 %>% 
   filter(!(Treatment =="Low"))
 data_subset_2 <- data_subset_2 %>% 
-  filter(!(Seed_sp %in% c("PSME", "THPL", "TSHE")))
+  filter(!(Seed_sp %in% c("Pseudotsuga menziesii", "Thuja plicata", "Tsuga heterophylla")))
+
+
 
 #This is the best model as I can apply it to both subset data and make the results comparable. Due to the high predation rate of P. menziesii, it was impossible to create a model that we checking for residuals and overdispersion made sense. This is why I decided to look at overall if the treatment affected seed removal based on species. Looking also at the plots of the removal per treatment (see section above: Overall check), there was no clear distnctions between the treatments as which indicates that there is no a strong reason to do otherwise. 
 data_subset$ObsID <- factor(1:nrow(data_subset))
