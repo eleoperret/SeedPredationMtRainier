@@ -1,0 +1,109 @@
+"","Week","Stand","Species_ID","Freq"
+"1","First","AE10","???",4
+"2","Fourth","AE10","???",0
+"3","Second","AE10","???",4
+"4","Third","AE10","???",0
+"5","First","AV06","???",0
+"6","Fourth","AV06","???",0
+"7","Second","AV06","???",0
+"8","Third","AV06","???",0
+"9","First","TO04","???",0
+"10","Fourth","TO04","???",0
+"11","Second","TO04","???",3
+"12","Third","TO04","???",0
+"13","First","AE10","Bird",17
+"14","Fourth","AE10","Bird",0
+"15","Second","AE10","Bird",1
+"16","Third","AE10","Bird",0
+"17","First","AV06","Bird",7
+"18","Fourth","AV06","Bird",0
+"19","Second","AV06","Bird",0
+"20","Third","AV06","Bird",3
+"21","First","TO04","Bird",27
+"22","Fourth","TO04","Bird",1
+"23","Second","TO04","Bird",0
+"24","Third","TO04","Bird",0
+"25","First","AE10","Flying squirrel",9
+"26","Fourth","AE10","Flying squirrel",0
+"27","Second","AE10","Flying squirrel",7
+"28","Third","AE10","Flying squirrel",0
+"29","First","AV06","Flying squirrel",3
+"30","Fourth","AV06","Flying squirrel",0
+"31","Second","AV06","Flying squirrel",4
+"32","Third","AV06","Flying squirrel",6
+"33","First","TO04","Flying squirrel",0
+"34","Fourth","TO04","Flying squirrel",0
+"35","Second","TO04","Flying squirrel",0
+"36","Third","TO04","Flying squirrel",0
+"37","First","AE10","Lepus americanus",0
+"38","Fourth","AE10","Lepus americanus",0
+"39","Second","AE10","Lepus americanus",0
+"40","Third","AE10","Lepus americanus",0
+"41","First","AV06","Lepus americanus",0
+"42","Fourth","AV06","Lepus americanus",0
+"43","Second","AV06","Lepus americanus",0
+"44","Third","AV06","Lepus americanus",0
+"45","First","TO04","Lepus americanus",6
+"46","Fourth","TO04","Lepus americanus",3
+"47","Second","TO04","Lepus americanus",0
+"48","Third","TO04","Lepus americanus",31
+"49","First","AE10","Peromyscus maniculatus",170
+"50","Fourth","AE10","Peromyscus maniculatus",0
+"51","Second","AE10","Peromyscus maniculatus",164
+"52","Third","AE10","Peromyscus maniculatus",389
+"53","First","AV06","Peromyscus maniculatus",287
+"54","Fourth","AV06","Peromyscus maniculatus",182
+"55","Second","AV06","Peromyscus maniculatus",456
+"56","Third","AV06","Peromyscus maniculatus",291
+"57","First","TO04","Peromyscus maniculatus",156
+"58","Fourth","TO04","Peromyscus maniculatus",276
+"59","Second","TO04","Peromyscus maniculatus",395
+"60","Third","TO04","Peromyscus maniculatus",410
+"61","First","AE10","Shrew?",0
+"62","Fourth","AE10","Shrew?",0
+"63","Second","AE10","Shrew?",0
+"64","Third","AE10","Shrew?",0
+"65","First","AV06","Shrew?",0
+"66","Fourth","AV06","Shrew?",0
+"67","Second","AV06","Shrew?",0
+"68","Third","AV06","Shrew?",0
+"69","First","TO04","Shrew?",1
+"70","Fourth","TO04","Shrew?",3
+"71","Second","TO04","Shrew?",6
+"72","Third","TO04","Shrew?",0
+"73","First","AE10","Tamias sp",181
+"74","Fourth","AE10","Tamias sp",0
+"75","Second","AE10","Tamias sp",172
+"76","Third","AE10","Tamias sp",8
+"77","First","AV06","Tamias sp",0
+"78","Fourth","AV06","Tamias sp",2
+"79","Second","AV06","Tamias sp",2
+"80","Third","AV06","Tamias sp",1
+"81","First","TO04","Tamias sp",0
+"82","Fourth","TO04","Tamias sp",0
+"83","Second","TO04","Tamias sp",0
+"84","Third","TO04","Tamias sp",0
+"85","First","AE10","vole?",0
+"86","Fourth","AE10","vole?",0
+"87","Second","AE10","vole?",0
+"88","Third","AE10","vole?",0
+"89","First","AV06","vole?",0
+"90","Fourth","AV06","vole?",0
+"91","Second","AV06","vole?",4
+"92","Third","AV06","vole?",1
+"93","First","TO04","vole?",3
+"94","Fourth","TO04","vole?",3
+"95","Second","TO04","vole?",10
+"96","Third","TO04","vole?",11
+"97","First","AE10","Zapus?",0
+"98","Fourth","AE10","Zapus?",0
+"99","Second","AE10","Zapus?",0
+"100","Third","AE10","Zapus?",0
+"101","First","AV06","Zapus?",0
+"102","Fourth","AV06","Zapus?",0
+"103","Second","AV06","Zapus?",0
+"104","Third","AV06","Zapus?",0
+"105","First","TO04","Zapus?",0
+"106","Fourth","TO04","Zapus?",0
+"107","Second","TO04","Zapus?",1
+"108","Third","TO04","Zapus?",0
