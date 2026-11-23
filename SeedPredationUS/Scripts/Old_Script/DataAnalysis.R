@@ -24,17 +24,28 @@ library(MASS)
 # Loading the data --------------------------------------------------------
 # Set the working directory
 getwd()
+<<<<<<< HEAD:SeedPredationUS/Scripts/Old_Script/DataAnalysis.R
 setwd("C:/Users/eperret/polybox - Eleonore Perret (eleonore.perret@usys.ethz.ch)@polybox.ethz.ch/phD/PhD/R/Seed_predation/Seed_predation_US_Manuscript/")
+=======
+setwd("C:/Users/eperret/polybox - Eleonore Perret (eleonore.perret@usys.ethz.ch)@polybox.ethz.ch/phD/PhD/R/Seed_predation/Seed_predation_US_Github/Seed_predation_US_Github2/Datasets")
+>>>>>>> a2f48e05c9bc269432cb14dc98c7bea61f8a8387:Scripts/Old_Script/DataAnalysis.R
 
 # List files in the main directory
 list.files()
 
 # Load datasets
+<<<<<<< HEAD:SeedPredationUS/Scripts/Old_Script/DataAnalysis.R
 seed_predation <- read.csv("SeedPredationUS/Datasets/SeedPredation_First_week.csv", sep=";") #Seed trays information
 all_data_seed<- read.csv("SeedPredationUS/Datasets/seed_data.csv",sep= ";") #Removal rates informations
 predators_data <- read_excel("SeedPredationUS/Datasets/camera_data.xlsx") #Camera data results
 
 load("SeedPredationUS/Datasets/data_cleaned_2.RData") #Done after cleaning the seed data. See Seed predation results later in the script
+=======
+seed_predation <- read.csv("SeedPredation_First_week.csv", sep=";") #Seed trays information
+all_data_seed<- read.csv("seed_data.csv",sep= ";") #Removal rates informations
+predators_data <- read_excel("camera_data.xlsx") #Camera data results
+load("data_cleaned_2.RData") #Done after cleaning the seed data. See Seed predation results later in the script
+>>>>>>> a2f48e05c9bc269432cb14dc98c7bea61f8a8387:Scripts/Old_Script/DataAnalysis.R
 
 # CAMERA TRAP DATA Information : Process_data ------------------------------------------------------------
 #Because I have empty rows after the row 27 (this comes from excel), I will first delete all the rows below
@@ -429,11 +440,14 @@ glmer_modelOLRE_New <- glmer(
   control = glmerControl(optimizer = "bobyqa", optCtrl = list(maxfun = 2e5))
 )
 
+<<<<<<< HEAD:SeedPredationUS/Scripts/Old_Script/DataAnalysis.R
 glmer_new<- glmmTMB(cbind(Sucess, Seeds.Placed-Success)~Stand + Seed_sp + 
                       (1 | Camera) + (1 | ObsID) + (1|Week),
                     family = binomial, 
                     data= data_cleaned_2)
 
+=======
+>>>>>>> a2f48e05c9bc269432cb14dc98c7bea61f8a8387:Scripts/Old_Script/DataAnalysis.R
 #Simulation the residuals to check for distribution of residuals
 sim_res <- simulateResiduals(fittedModel = glmer_modelOLRE_New, plot = TRUE)
 testDispersion(sim_res)#does not show overdispersion; was overdisperse without the ObsID
