@@ -1,0 +1,10 @@
+"","df","AIC"
+"model_elevation_full",8,2158.30297654424
+"model_elevation_full_int",10,2162.04456784155
+"model_elevation_simple5",7,2174.2880212565
+"model_elevation_simple3",7,2181.04486447287
+"model_elevation_simple2",6,2194.17535553653
+"model_elevation_simple4",7,2228.14811806883
+"model_elevation_simple",5,2253.7674076186
+"model_elevation_simple_int",7,2257.76478181022
+"model_elevation_null",2,2275.25744433069

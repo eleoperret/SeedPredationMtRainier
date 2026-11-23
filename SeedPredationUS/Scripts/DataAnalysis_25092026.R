@@ -3,6 +3,12 @@
 ####ETHZ Eléonore Perret
 ####Code for measuring seed removal.  
 
+
+##Where I stopped. I looked at a new way to model my data. 
+#now I will have new models for q1, q2 and q3 where for q3 I can have the low treatment and the species one to answer a) there is difference in the removal for that specie per stand and b) there is no difference in the treatment removal. 
+#I did not check for the camera data. 
+#need to clean the code and prepare more plots. 
+
 # Loading librairies ------------------------------------------------------
 # install.packages("dplyr")
 # install.packages("ggplot2")
@@ -121,6 +127,35 @@ species_stand_removal<- data_cleaned_2 %>%
   summarize(mean_removal= mean(removal_prop, na.rm = TRUE))%>%
   arrange(Seed_sp)
 species_stand_removal
+
+species_treatment_removal<- data_cleaned_2 %>%
+  group_by( Seed_sp, Treatment)%>%
+  mutate(removal_prop = Success / seed_disposed) %>% 
+  summarize(mean_removal= mean(removal_prop, na.rm = TRUE))%>%
+  arrange(Seed_sp)
+species_treatment_removal
+
+species_treatment_removal<- data_cleaned_2 %>%
+  group_by( Seed_sp, Treatment, Stand)%>%
+  mutate(removal_prop = Success / seed_disposed) %>% 
+  summarize(mean_removal= mean(removal_prop, na.rm = TRUE))%>%
+  arrange(Seed_sp)
+species_treatment_removal
+
+ggplot(species_treatment_removal, aes(x = Treatment, y = mean_removal, color = Stand, group = Stand)) +
+  geom_point(size = 3) +
+  geom_line() +
+  facet_wrap(~Seed_sp) +
+  scale_color_manual(values = c("Low" = "black", "Mid" = "grey50", "High" = "grey80")) +
+  labs(
+    title = "Seed Removal by Species, Treatment, and Stand",
+    y = "Mean Removal Proportion",
+    x = "Treatment",
+    color = "Stand"
+  ) +
+  ylim(0, 1) +
+  theme_minimal() +
+  theme(text = element_text(family = "Times New Roman", size = 12))
 
 week_removal <- data_cleaned_2 %>%
   group_by(Week)%>%
@@ -610,11 +645,12 @@ gall<-ggplot(em_df, aes(x = Stand, y = prob, color = Stand, shape = Seed_sp)) +
 plot(gall)
 
 #low
-model_removal_species_beta_low<- glmmTMB(cbind(Success, Seeds.Placed-Success)~Stand + Seed_sp + (1 | Camera) +  (1|Week),family = betabinomial(), data= data_cleaned_2[data_cleaned_2$Treatment=="Low",])
+model_removal_species_beta_low<- glmmTMB(cbind(Success, seed_disposed-Success)~Stand + Seed_sp + (1 | Camera) +  (1|Week),family = betabinomial(), data= data_cleaned_2[data_cleaned_2$Treatment=="Low",])
 resid_low<-simulateResiduals(model_removal_species_beta_low)
 plot(resid_low)
 testDispersion(resid_low)
 testZeroInflation(resid_low)
+summary(model_removal_species_beta_low)
 #Plotting both
 em_both <- emmeans(model_removal_species_beta_low, ~ Stand * Seed_sp, type = "response")
 all_contrasts <- pairs(em_both, adjust = "tukey")
@@ -661,7 +697,8 @@ plot(glow)
 
 
 #high
-model_removal_species_beta_high<- glmmTMB(cbind(Success, Seeds.Placed-Success)~Stand * Seed_sp + (1 | Camera) +  (1|Week),family = betabinomial(), data= data_cleaned_2[data_cleaned_2$Treatment=="High",])
+model_removal_species_beta_high<- glmmTMB(cbind(Success, seed_disposed-Success)~Stand * Seed_sp + (1 | Camera) +  (1|Week),family = betabinomial(), data= data_cleaned_2[data_cleaned_2$Treatment=="High",])
+summary(model_removal_species_beta_high)
 
 resid_high<-simulateResiduals(model_removal_species_beta_high)
 plot(resid_high)
@@ -1022,6 +1059,9 @@ anova(m_simple,m_simple3)
 mpsme_simple<- glmmTMB(cbind(Success, seed_disposed - Success) ~ Treatment + Stand,
                    family = betabinomial(),
                    data = psme)
+mpsme_full<-glmmTMB(cbind(Success, seed_disposed - Success) ~ Treatment + Stand + (1|Week) + (1|Camera),
+        family = betabinomial(),
+        data = psme)#doesn't work either
 
 #checking model
 resid_psme<-simulateResiduals(mpsme_simple)
@@ -1029,6 +1069,7 @@ plot(resid_psme)
 testOverdispersion(resid_psme) #there is some underdispersion but looks relatively ok.
 testZeroInflation(resid_psme)
 summary(mpsme_simple)
+summary(mpsme_full)
 #this does make sense as it was constantly removed no matter the week the stand or the camera location
 
 
@@ -1047,11 +1088,11 @@ anova(m_null,m_simple)#but not statistically significant
 m_simple_int<- glmmTMB(cbind(Success, seed_disposed - Success) ~ Treatment * Stand,
                        family = betabinomial(),
                        data = tshe)
-AIC(m_null,m_simple_int)#the interaction doesn't improve the model fit
+AIC(m_simple,m_simple_int)#the interaction doesn't improve the model fit
 m_simple2<- glmmTMB(cbind(Success, seed_disposed - Success) ~ Treatment + Stand + (1|Week),
                     family = betabinomial(),
                     data = tshe)
-AIC(m_null,m_simple2) #doesn't improve fit
+AIC(m_simple,m_simple2) #doesn't improve fit
 m_simple3<- glmmTMB(cbind(Success, seed_disposed - Success) ~ Treatment + Stand + (1|Camera),
                     family = betabinomial(),
                     data = tshe)
@@ -1060,19 +1101,20 @@ anova(m_simple3,m_null)# not statistically significant
 m_full<- glmmTMB(cbind(Success, seed_disposed - Success) ~ Treatment + Stand + (1|Week) + (1|Camera),
                  family = betabinomial(),
                  data = tshe)
-AIC(m_full,m_null)
-anova(m_full,m_null)#not statistically significant so I will take the most simple model
+AIC(m_full,m_simple3)
+anova(m_full,m_simple3)#not statistically significant so I will take the most simple model
 
-mtshe_null<- glmmTMB(cbind(Success, seed_disposed - Success) ~ 1,
+AIC(m_)
+mtshe_full<- glmmTMB(cbind(Success, seed_disposed - Success) ~ Treatment + Stand + (1|Week) + (1|Camera),
                  family = betabinomial(),
                  data = tshe)
 
 #checking model
-resid_tshe<-simulateResiduals(mtshe_null)
+resid_tshe<-simulateResiduals(mtshe_full)
 plot(resid_tshe)
 testOverdispersion(resid_tshe) #there is some underdispersion but looks relatively ok.
 testZeroInflation(resid_tshe)
-summary(mtshe_null)
+summary(mtshe_full)
 
 
 
@@ -1112,11 +1154,104 @@ mthpl_simple2<- glmmTMB(cbind(Success, seed_disposed - Success) ~ Treatment + St
                         data = thpl)
 
 #checking model
-resid_thpl<-simulateResiduals(mthpl_simple2)
+resid_thpl<-simulateResiduals(m_full)
 plot(resid_thpl)
 testOverdispersion(resid_thpl) #there is some underdispersion but looks relatively ok.
 testZeroInflation(resid_thpl)
 summary(mthpl_simple2)
+
+
+
+
+
+
+
+data_subset_low <- data_cleaned_2 %>% 
+  filter(!(Seed_sp %in% c("Abies amabilis", "Callitropsis nootkatensis","Abies lasiocarpa")))
+
+
+m_null<- glmmTMB(cbind(Success, seed_disposed - Success) ~ 1,
+                 family = betabinomial(),
+                 data = data_subset_low)
+
+m_simple<-glmmTMB(
+  cbind(Success, seed_disposed - Success) ~ Treatment + Seed_sp + Stand,
+  family = betabinomial(),
+  data = data_subset_low
+)
+
+m_simple_int<-glmmTMB(
+  cbind(Success, seed_disposed - Success) ~ Treatment * Seed_sp + Stand ,
+  family = betabinomial(),
+  data = data_subset_low
+)
+
+summary(m_simple_int)
+
+AIC(m_null,m_simple); AIC(m_simple,m_simple_int)
+anova(m_simple,m_simple_int)
+
+m_simple_2 <- glmmTMB(
+  cbind(Success, seed_disposed - Success) ~ Treatment + Seed_sp + Stand +
+    (1 | Camera),
+  family = betabinomial(),
+  data = data_subset_low
+)
+
+AIC(m_simple,m_simple_2)
+
+m_simple_3 <- glmmTMB(
+  cbind(Success, seed_disposed - Success) ~ Treatment + Seed_sp + Stand +
+    + (1 | Week),
+  family = betabinomial(),
+  data = data_subset_low
+)
+
+AIC(m_simple_3,m_simple_2)
+
+m_all <- glmmTMB(
+  cbind(Success, seed_disposed - Success) ~ Treatment + Seed_sp + Stand +
+    (1 | Camera) + (1 | Week),
+  family = betabinomial(),
+  data = data_subset_low
+)
+
+AIC(m_all,m_simple_2)
+
+m_simple_int2 <- glmmTMB(
+  cbind(Success, seed_disposed - Success) ~ Treatment * Seed_sp + Stand +
+    (1 | Camera),
+  family = betabinomial(),
+  data = data_subset_low
+)
+
+AIC(m_simple_int,m_simple_int2)
+
+m_simple_int3 <- glmmTMB(
+  cbind(Success, seed_disposed - Success) ~ Treatment * Seed_sp + Stand +
+     + (1 | Week),
+  family = betabinomial(),
+  data = data_subset_low
+)
+
+AIC(m_simple_int3,m_simple_int2)
+
+m_all_int <- glmmTMB(
+  cbind(Success, seed_disposed - Success) ~ Treatment * Seed_sp + Stand +
+    (1 | Camera) + (1 | Week),
+  family = betabinomial(),
+  data = data_subset_low
+)
+
+AIC(m_all_int,m_simple_int2)
+
+resid<-simulateResiduals(m_all)
+plot(resid)
+testOverdispersion(resid)
+testZeroInflation(resid)
+
+
+
 
 
 

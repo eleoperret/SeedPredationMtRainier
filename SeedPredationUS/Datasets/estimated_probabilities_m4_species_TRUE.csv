@@ -1,0 +1,7 @@
+"","contrast","Seed_sp","odds.ratio","SE","95% CI","null","z.ratio","p.value"
+"1","(Same-range only) / Mixed","Pseudotsuga menziesii","1.461","0.613","[0.642,3.324]","1.000","0.904","0.366"
+"2","(Same-range only) / Mixed","Thuja plicata","1.009","0.324","[0.537,1.894]","1.000","0.028","0.978"
+"3","(Same-range only) / Mixed","Tsuga heterophylla","1.687","0.572","[0.867,3.280]","1.000","1.541","0.123"
+"4","(Same-range only) / Mixed","Abies amabilis","0.801","0.305","[0.379,1.691]","1.000","-0.583","0.560"
+"5","(Same-range only) / Mixed","Callitropsis nootkatensis","1.046","0.414","[0.482,2.270]","1.000","0.113","0.910"
+"6","(Same-range only) / Mixed","Abies lasiocarpa","0.755","0.256","[0.388,1.466]","1.000","-0.831","0.406"
